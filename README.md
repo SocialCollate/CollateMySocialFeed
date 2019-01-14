@@ -66,5 +66,9 @@ Link to your Trello boards here:
   * component (if needed)
   * ...
 * [Tasks](https://trello.com/b/Io7hIxuE/tasks)
-* [Plan](https://trello.com/b/ynq3kXEV/plan)
+* [Plan](https://trello.com/b/ynq3kXEV/pla)n)
+
+### Littlelist
+*[Littlelist](https://github.com/AliceDigitalLabs/little_list)
+*[Demo](https://littlelist.github.io/#/events_list)
 

@@ -40,7 +40,7 @@
 
             for(var index=0; index < numToCreate; index++){
 
-                var name = "event " + index;
+                var name = "this is event " + index;
                 var date = moment().add('years', index).toDate();
                 var postcode = "M1 5GD";
 

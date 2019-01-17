@@ -2,7 +2,7 @@
     'use strict';
 
     angular
-        .module('eventsjs')
+        .module('postsjs')
         .factory('eventsSrvc', eventsSrvc);
 
         eventsSrvc.$inject = [
@@ -36,11 +36,12 @@
         }
 
         var createDummyEvents = function(numToCreate){
+            //CREATE FALSE EVENTS
             var result = [];
 
             for(var index=0; index < numToCreate; index++){
 
-                var name = "event " + index;
+                var name = "FUN EVENT " + index;
                 var date = moment().add('years', index).toDate();
                 var postcode = "M1 5GD";
 

@@ -1,6 +1,6 @@
 {
-  "name": "My Ionic App",
-  "short_name": "My Ionic App",
+  "name": "Collate My Social Feed",
+  "short_name": "Social Collate",
   "start_url": "index.html",
   "display": "standalone",
   "icons": [{

@@ -2,7 +2,7 @@
     'use strict';
 
     angular
-        .module('postsjs')
+        .module('eventsjs')
         .controller('eventsUpdateCtrl', control);
 
     control.$inject = [
@@ -23,7 +23,7 @@
 
         // TODO: Error Handling
         eventsSrvc.updateEvents().then(function(){
-            $state.go('events_list');
+            $state.go('posts_list');
         });    
     }
 })();

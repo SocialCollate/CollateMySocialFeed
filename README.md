@@ -70,5 +70,5 @@ Link to your Trello boards here:
 
 ### Littlelist
 *[Littlelist](https://github.com/AliceDigitalLabs/little_list)
-*[Demo](https://littlelist.github.io/#/events_list)
+*[Demo](https://littlelist.github.io/#/posts_list)
 

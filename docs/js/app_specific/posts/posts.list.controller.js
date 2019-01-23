@@ -2,7 +2,7 @@
     'use strict';
 
     angular
-        .module('postsjs')
+        .module('eventsjs')
         .controller('eventsListCtrl', control);
 
     control.$inject = [
@@ -26,7 +26,7 @@
             // we're passing parameters into the new state
             // 'selected is an attribute in a parameter object, defined in the module definition
             // I'm going to write the destination controller, so it knows to look for an object with a 'selected' attribute
-            $state.go('events_detail', {selected: index});
+            $state.go('posts_detail', {selected: index});
 
 
         }
@@ -36,7 +36,7 @@
         }
 
         vm.update = function(){
-            $state.go('events_update');
+            $state.go('posts_update');
         }
 
 

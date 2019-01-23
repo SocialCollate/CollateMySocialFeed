@@ -2,7 +2,7 @@
     'use strict';
 
     angular
-        .module('postsjs')
+        .module('eventsjs')
         .controller('eventsDetailCtrl', control);
 
     control.$inject = [
@@ -26,7 +26,7 @@
         
 
         vm.done = function(){
-            $state.go('events_list');
+            $state.go('posts_list');
         }
 
         var params = $stateParams;

@@ -2,26 +2,26 @@
 	'use strict';
 
 	angular
-		.module('postsjs', [
+		.module('eventsjs', [
 		])
         .config(function($stateProvider) {
 			$stateProvider
-				.state('events_list', {
+				.state('posts_list', {
 					cache: false,
-					url: '/events_list',
-					templateUrl: 'js/app_specific/events/events.list.html',
+					url: '/posts_list',
+					templateUrl: 'js/app_specific/posts/posts.list.html',
                     controller: 'eventsListCtrl as vm'
                 })
-                .state('events_update', {
+                .state('posts_update', {
 					cache: false,
-					url: '/events_update',
-					templateUrl: 'js/app_specific/events/events.update.html',
+					url: '/posts_update',
+					templateUrl: 'js/app_specific/posts/posts.update.html',
                     controller: 'eventsUpdateCtrl as vm'
                 })
-                .state('events_detail', {
+                .state('posts_detail', {
 					cache: false,
-					url: '/events_detail',
-                    templateUrl: 'js/app_specific/events/events.detail.html',
+					url: '/posts_detail',
+                    templateUrl: 'js/app_specific/posts/posts.detail.html',
                     params: {'selected': 0 },
                     controller: 'eventsDetailCtrl as vm'
                 })

@@ -27,27 +27,8 @@ angular.module('starter', [
       if (window.StatusBar) {
         StatusBar.styleDefault();
       }
-      //check fb login info
-      FB.getLoginStatus(function (response) {
-        statusChangeCallback(response);
-      });
-
-      function statusChangeCallback(response){
-        if (response.status === 'connected'){
-          console.log(response.authResponse.accessToken);
-        }
-      }
-
-      function checkLoginState() {
-        FB.getLoginStatus(function(response) {
-          statusChangeCallback(response);
-        });
-      }
-
-      
-
       // ADDED START
-      $state.go("posts_list");
+      $state.go("events_list");
       // ADDED END
 
     });

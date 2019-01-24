@@ -2,7 +2,7 @@
 	'use strict';
 
 	angular
-		.module('postsjs', [
+		.module('eventsjs', [
 		])
         .config(function($stateProvider) {
 			$stateProvider

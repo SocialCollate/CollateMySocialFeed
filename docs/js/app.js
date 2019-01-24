@@ -6,7 +6,7 @@
 angular.module('starter', [
   'ionic',
   'momentjs', // ADDED used for dates
-  'eventsjs'  // ADDED our feed module
+  'postsjs'  // ADDED our feed module
 ])
 
   .run(function ($ionicPlatform, $state, $rootScope) {
@@ -28,7 +28,7 @@ angular.module('starter', [
         StatusBar.styleDefault();
       }
       // ADDED START
-      $state.go("posts_list");
+      $state.go("events_list");
       // ADDED END
 
     });

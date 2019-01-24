@@ -22,20 +22,29 @@
         };
 
         var PAUSE_FOR_A_WHILE_MS = 3000;
-        var NUM_DUMMY_EVENTS = 10;
+        var NUM_DUMMY_EVENTS = 20;
 
 
-        var createEvent = function(name, date, postcode){
+        var createPost = function(name, date, caption, message, picture){
 
             var result = {
                 name : name,
                 date : date,
-                postcode: postcode
+                caption: caption,
+                message: message,
+                picture: picture
             }
             return result;
         }
 
+
+        
+
         var createDummyEvents = function(numToCreate){
+            //get posts from FB.
+
+
+
             var result = [];
 
             for(var index=0; index < numToCreate; index++){

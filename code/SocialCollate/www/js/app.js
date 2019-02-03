@@ -6,7 +6,8 @@
 angular.module('starter', [
   'ionic',
   'momentjs', // ADDED used for dates
-  'eventsjs'  // ADDED our events module
+  'eventsjs',  // ADDED our posts module
+  'ngCordovaOauth' //ng Cordova OAuth plugin.
 ])
 
   .run(function ($ionicPlatform, $state, $rootScope) {
@@ -28,7 +29,7 @@ angular.module('starter', [
         StatusBar.styleDefault();
       }
       // ADDED START
-      $state.go("events_list");
+      $state.go("posts_list");
       // ADDED END
 
     });

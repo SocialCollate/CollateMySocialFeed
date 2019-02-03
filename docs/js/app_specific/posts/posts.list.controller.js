@@ -2,7 +2,7 @@
     'use strict';
 
     angular
-        .module('postsjs')
+        .module('eventsjs')
         .controller('eventsListCtrl', control);
 
     control.$inject = [

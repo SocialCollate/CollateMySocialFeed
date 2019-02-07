@@ -3,7 +3,7 @@
 
     angular
         .module('eventsjs')
-        .controller('eventsListCtrl', control);
+        .controller('accountsListCtrl', control);
 
     control.$inject = [
         '$state',

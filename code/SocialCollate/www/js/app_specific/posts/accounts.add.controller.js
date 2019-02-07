@@ -31,6 +31,8 @@
             $state.go('posts_detail', {selected: index});
 
 
+            
+
         }
         
 

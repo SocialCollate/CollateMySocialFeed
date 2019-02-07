@@ -22,7 +22,7 @@
 
 
         /*LOGIN FB*/ 
-        vm.FBLogin = function(account_num){
+        vm.FBLogin = function(account){
             $cordovaOauth.facebook("954844384905992", ["user_posts"]).then(function(result) {
                 // results
                 console.log(result.access_token);

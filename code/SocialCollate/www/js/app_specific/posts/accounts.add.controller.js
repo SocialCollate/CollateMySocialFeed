@@ -18,32 +18,37 @@
     ) {
         var vm = angular.extend(this, {
             events : []
-         });
-        
+        });
 
         
-        vm.onItemSelected = function(index){
-            console.log("Item : " + index);
 
-            // we're passing parameters into the new state
-            // 'selected is an attribute in a parameter object, defined in the module definition
-            // I'm going to write the destination controller, so it knows to look for an object with a 'selected' attribute
-            $state.go('posts_detail', {selected: index});
+        /*LOGIN FB*/ 
+        vm.FBLogin = function(account){
+            $cordovaOauth.facebook("954844384905992", ["user_posts"]).then(function(result) {
+                // results
+                account.access_token = result.access_token;
+                account.expiry = result.expires;
+                account.time_created 
+                storeAccount(account)
 
+                //search by account_num
 
-            
-
+            }, function(error) {
+                // error
+                console.log("facebook login attempt failed: "+error);
+            });
         }
-        
+        //TWITTER
+        vm.TwitterLogin = function(){
 
-        vm.noEvents = function(){
-            return vm.events.length == 0;
+            $cordovaOauth.twitter("954844384905992", ["user_posts"]).then(function(result) {
+                // results
+                console.log(result.access_token);
+            }, function(error) {
+                // error
+                console.log("facebook login attempt failed: "+error);
+            });
         }
-
-        vm.update = function(){
-            $state.go('posts_update');
-        }
-
 
         vm.events = eventsSrvc.getEvents();
               

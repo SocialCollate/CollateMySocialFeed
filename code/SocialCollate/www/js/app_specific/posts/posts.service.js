@@ -44,7 +44,7 @@
             var result = [];
             var response = [];
             //get Posts from FB
-            $cordovaOAuth.facebook(APP_ID_FB, )
+            
             for (var index = 0; (index < numToGet && index < response.length); index++) {
                 let post = response[index];
                 result.push(createPost(post.id, post.from, post.created_time, post.caption, post.description, post.picture, post.message));

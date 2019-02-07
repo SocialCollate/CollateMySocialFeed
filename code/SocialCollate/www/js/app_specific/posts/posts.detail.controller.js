@@ -8,7 +8,8 @@
     control.$inject = [
         '$state',
         '$stateParams',
-        'eventsSrvc'
+        'eventsSrvc',
+        'accountsSrvc'
         ];
     
     function control(

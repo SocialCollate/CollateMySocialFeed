@@ -8,7 +8,8 @@
     control.$inject = [
         '$state',
         '$cordovaOauth',
-        'eventsSrvc'
+        'eventsSrvc',
+        'accountsSrvc'
         ];
     
     function control(
@@ -28,7 +29,7 @@
                 // results
                 account.access_token = result.access_token;
                 account.expiry = result.expires;
-                account.time_created 
+                account.time_created = Date.now();
                 storeAccount(account)
 
                 //search by account_num
@@ -38,7 +39,7 @@
                 console.log("facebook login attempt failed: "+error);
             });
         }
-        //TWITTER
+        /*TWITTER 
         vm.TwitterLogin = function(){
 
             $cordovaOauth.twitter("954844384905992", ["user_posts"]).then(function(result) {
@@ -49,8 +50,7 @@
                 console.log("facebook login attempt failed: "+error);
             });
         }
-
-        vm.events = eventsSrvc.getEvents();
+        */
               
     }
 })();

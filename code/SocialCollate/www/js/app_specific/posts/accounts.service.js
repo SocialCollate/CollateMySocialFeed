@@ -16,63 +16,64 @@
         $timeout,
         moment
     ) {
-        var ACCOUNTS = [];
+
         var service = {
 
         };
-
-        function getAccounts(){
+        
+        service.ACCOUNTS = [];
+        service.getAccounts = function () {
             ACCOUNTS = [];
             //read acounts from local storage.
             let accountsStr = window.localStorage.getItem("accounts");
 
             let extractedArray = accountsStr.split(";");
-            for (let i = 0; i < extractedArray.length; i ++){
+            for (let i = 0; i < extractedArray.length; i++) {
                 let extractedItem = extractedArray[i].split(",");
                 ACCOUNTS[i] = {
-                    account_num:extractedItem[0],
-                    access_token:extractedItem[1],
-                    expiry:extractedItem[2],
-                    time_created:extractedItem[3]
+                    account_num: extractedItem[0],
+                    access_token: extractedItem[1],
+                    expiry: extractedItem[2],
+                    time_created: extractedItem[3]
                 }
             }
             //now ACCOUNTS is updated.
         }
 
-        function storeAccount(account) {
+        service.storeAccount = function (account) {
             //store new/update old account in local storage.
             var arrayLength = ACCOUNTS.length;
-        
+
             for (var i = 0; i < arrayLength; i++) {
-        
+
                 if (ACCOUNTS[i].account_num == account.account_num) {
-        
+
                     ACCOUNTS[i].access_token = account.access_token;
                     ACCOUNTS[i].expiry = account.expiry;
                     ACCOUNTS[i].time_created = account.time_created;
-        
+
                 } else {
                     ACCOUNTS.push(account);
                 }
                 storeLocalAccounts()
             }
         }
-        
-        
+
+
         function storeLocalAccounts() {
             var arrayLength = ACCOUNTS.length;
             var string = "";
-        
+
             for (var i = 0; i < arrayLength; i++) {
-        
+
                 string += ACCOUNTS[i].account_num + ",";
                 string += ACCOUNTS[i].access_token + ",";
                 string += ACCOUNTS[i].expiry + ",";
                 string += ACCOUNTS[i].time_created + ";";
-        
+
             }
-        
-            window.localStorage.setItem("accounts",string);
+
+            window.localStorage.setItem("accounts", string);
         }
 
         return service;

@@ -30,12 +30,12 @@
 					url: '/posts_filter',
                     templateUrl: 'js/app_specific/posts/posts.detail.html',
                     params: {'selected': 0 },
-                    controller: 'postsFilerCtrl as vm'
+                    controller: 'postsFilterCtrl as vm'
 				})
 				.state('accounts_list', {
 					cache: false,
 					url: '/accounts_list',
-                    templateUrl: 'js/app_specific/posts/account.list.html',
+                    templateUrl: 'js/app_specific/posts/accounts.list.html',
                     params: {'selected': 0 },
                     controller: 'accountsListCtrl as vm'
 				})

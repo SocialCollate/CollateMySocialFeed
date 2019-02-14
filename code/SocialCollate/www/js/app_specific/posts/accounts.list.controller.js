@@ -40,7 +40,13 @@
         }
 
         vm.update = function(){
+            console.log("ohh");
             $state.go('posts_update');
+        }
+
+        vm.addAccount = function(){
+            console.log("C R I N G E");
+            $state.go('accounts_add');
         }
 
 

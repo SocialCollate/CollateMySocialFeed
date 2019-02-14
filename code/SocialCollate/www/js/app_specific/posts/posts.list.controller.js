@@ -35,7 +35,6 @@
         }
 
         vm.accountList = function(){
-            console.log("C R I N G E");
             $state.go('accounts_list');
         }
         

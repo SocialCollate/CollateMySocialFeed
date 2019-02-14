@@ -4,24 +4,22 @@
         <h1 class="title">Add Account</h1>
     </ion-header-bar>
 
-    <div class="fb-login-button" data-width="150" data-size="large" data-button-type="continue_with" data-auto-logout-link="false" data-use-continue-as="false"></div>
-    
     <ion-content class="has-header">
 
 
-        <div ng-hide="!vm.noEvents">
+        <div>
 
             <ion-list>
                 <ion-item ng-click="vm.FBLogin()" ng-repeat="">
-                    
+                    Facebook
                 </ion-item>
 
                 <ion-item ng-click="vm.INSTALogin()" ng-repeat="">
-                    
+                    Instagram
                 </ion-item>
 
                 <ion-item ng-click="vm.TWITTERLogin()" ng-repeat="">
-                    
+                    Twitter
                 </ion-item>
 
             </ion-list>

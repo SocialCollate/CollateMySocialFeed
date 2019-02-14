@@ -18,7 +18,7 @@
         eventsSrvc
     ) {
         var vm = angular.extend(this, {
-            events : []
+            accounts : []
          });
         
 
@@ -35,8 +35,8 @@
         }
         
 
-        vm.noEvents = function(){
-            return vm.events.length == 0;
+        vm.noAccounts = function(){
+            return vm.accounts.length == 0;
         }
 
         vm.update = function(){
@@ -45,7 +45,6 @@
         }
 
         vm.addAccount = function(){
-            console.log("C R I N G E");
             $state.go('accounts_add');
         }
 

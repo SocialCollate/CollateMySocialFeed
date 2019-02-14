@@ -35,7 +35,7 @@
 				.state('accounts_list', {
 					cache: false,
 					url: '/accounts_list',
-                    templateUrl: 'js/app_specific/posts/account.list.html',
+                    templateUrl: 'js/app_specific/posts/accounts.list.html',
                     params: {'selected': 0 },
                     controller: 'accountsListCtrl as vm'
 				})

@@ -20,7 +20,7 @@
         var service = {
 
         };
-        
+
         service.ACCOUNTS = [];
         service.getAccounts = function () {
             ACCOUNTS = [];
@@ -79,6 +79,31 @@
         return service;
 
     }
+
+    service.deleteAccount = function (account) {
+
+        var index = checkIndex(account);
+
+        //index of account comes from the checkIndex function
+        //array slice saves a shallow copy of array list need to look more into this
+        ACCOUNTS = ACCOUNTS.slice(index, 1);
+
+        // use existing fuction to store new array list
+        storeLocalAccounts();
+
+
+    }
+
+    //function to check index of account object
+    function checkIndex(account) {
+        var index;
+        index = ACCOUNTS.findIndex(account);
+
+        //returns the index 
+        return index;
+
+    }
+
 
 
 })();

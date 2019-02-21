@@ -49,7 +49,18 @@
         }
 
 
+        //Confirm dialogue 
+
+
+
+
         vm.events = eventsSrvc.getEvents();
               
     }
+
+
+
+
+
+
 })();

@@ -48,6 +48,7 @@
 
                 if (ACCOUNTS[i].account_num == account.account_num) {
 
+                    ACCOUNTS[i].platform_name
                     ACCOUNTS[i].access_token = account.access_token;
                     ACCOUNTS[i].expiry = account.expiry;
                     ACCOUNTS[i].time_created = account.time_created;
@@ -67,6 +68,7 @@
             for (var i = 0; i < arrayLength; i++) {
 
                 string += ACCOUNTS[i].account_num + ",";
+                string += ACCOUNTS[i].platform_name + ",";
                 string += ACCOUNTS[i].access_token + ",";
                 string += ACCOUNTS[i].expiry + ",";
                 string += ACCOUNTS[i].time_created + ";";
@@ -91,6 +93,24 @@
         // use existing fuction to store new array list
         storeLocalAccounts();
 
+
+    }
+
+    function getDeets(account){
+        //return new obj with data.
+        // data : {name:bob,...}
+        account = ACCOUNT[checkIndex(account)];
+
+        switch (account.platform_name.toLowerCase()){
+            case "facebook": 
+                FB.api('/me', {fields: 'first_name, last_name, email'}, function(response){
+                    console.log("response");
+                });
+            break;
+            case "twitter": 
+            
+            break;
+        }
 
     }
 

@@ -11,8 +11,9 @@
         <div ng-hide="!vm.noAccounts">
 
             <ion-list>
-                <ion-item ng-click="vm.viewAccount($index)" ng-repeat="account in vm.ACCOUNTS">
-                    
+                <ion-item ng-repeat="account in vm.ACCOUNTS">
+                    <h2 style="float:left;">{vm.ACCOUNTS[$index].platform.toUpperCase()}</h2>
+                    <h3 style="float:left;">{vm.ACCOUNTS[]}</h3>
                 </ion-item>
             </ion-list>
             

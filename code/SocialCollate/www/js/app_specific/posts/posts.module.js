@@ -30,7 +30,7 @@
 					url: '/posts_filter',
                     templateUrl: 'js/app_specific/posts/posts.detail.html',
                     params: {'selected': 0 },
-                    controller: 'postsFilerCtrl as vm'
+                    controller: 'postsFilterCtrl as vm'
 				})
 				.state('accounts_list', {
 					cache: false,

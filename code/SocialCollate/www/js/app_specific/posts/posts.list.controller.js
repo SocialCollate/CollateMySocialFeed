@@ -34,6 +34,11 @@
 
         }
 
+        vm.accountList = function(){
+            $state.go('accounts_list');
+        }
+        
+
 
         vm.noEvents = function () {
             return vm.events.length == 0;
@@ -42,7 +47,6 @@
         vm.update = function () {
             $state.go('posts_update');
         }
-
 
         vm.events = eventsSrvc.getEvents();
 

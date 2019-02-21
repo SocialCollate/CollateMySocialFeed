@@ -48,6 +48,12 @@
             $state.go('accounts_add');
         }
 
+        vm.deleteAccount = function(index){
+            let respond = window.confirm("Are you sure you want to delete this account?");
+            alert(respond);
+        }
+
+
 
         vm.events = eventsSrvc.getEvents();
               

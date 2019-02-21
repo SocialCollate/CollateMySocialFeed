@@ -29,7 +29,7 @@
             $cordovaOauth.facebook("954844384905992", ["user_posts"]).then(function(result) {
                 //results
                 let account = {
-                    account_num : ACCOUNTS[ACCOUNT.length-1].account_num,
+                    account_num : vm.ACCOUNTS[vm.ACCOUNTS.length-1].account_num,
                     platform_name: "facebook",
                     access_token : result.access_token,
                     expiry : result.expires,

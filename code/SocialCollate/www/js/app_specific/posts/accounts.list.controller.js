@@ -15,13 +15,16 @@
     function control(
         $state,
         $cordovaOauth,
-        eventsSrvc
+        eventsSrvc,
+        accountsSrvc
     ) {
         var vm = angular.extend(this, {
             accounts : []
          });
         
-
+         vm.ACCOUNTS = accountsSrvc.getAccounts();
+         console.log("loaded accounts"+vm.ACCOUNTS.length);
+         
         
         vm.onItemSelected = function(index){
             console.log("Item : " + index);

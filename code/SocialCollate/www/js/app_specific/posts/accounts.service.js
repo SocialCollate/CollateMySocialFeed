@@ -23,41 +23,51 @@
 
         service.ACCOUNTS = [];
         service.getAccounts = function () {
+            console.log("getting accounts");
             service.ACCOUNTS = [];
             //read acounts from local storage.
             let accountsStr = window.localStorage.getItem("accounts");
-
-            let extractedArray = accountsStr.split(";");
-            for (let i = 0; i < extractedArray.length; i++) {
-                let extractedItem = extractedArray[i].split(",");
-                service.ACCOUNTS[i] = {
-                    account_num: extractedItem[0],
-                    access_token: extractedItem[1],
-                    expiry: extractedItem[2],
-                    time_created: extractedItem[3]
+            console.log("LOCAL STORE: "+ window.localStorage.getItem("accounts"));
+            if (accountsStr.length != 0) {
+                if (accountsStr == null) { window.localStorage.setItem("accounts", ""); accountsStr = ""; }
+                let extractedArray = accountsStr.split(";");
+                for (let i = 0; i < extractedArray.length; i++) {
+                    let extractedItem = extractedArray[i].split(",");
+                    service.ACCOUNTS[i] = {
+                        account_num: extractedItem[0],
+                        access_token: extractedItem[1],
+                        expiry: extractedItem[2],
+                        time_created: extractedItem[3]
+                    }
                 }
+
             }
             //now ACCOUNTS is updated.
+            console.log("RETURNED"+service.ACCOUNTS.length);
+            return service.ACCOUNTS;
         }
 
         service.storeAccount = function (account) {
             //store new/update old account in local storage.
             var arrayLength = service.ACCOUNTS.length;
-
+console.log("storing account");
             for (var i = 0; i < arrayLength; i++) {
 
-                if (service.ACCOUNTS[i].account_num == account.account_num) {
+                if (service.ACCOUNTS[i].account_num === account.account_num) {
 
-                    service.ACCOUNTS[i].platform_name
+                    service.ACCOUNTS[i].platform_name = account.platform_name;
                     service.ACCOUNTS[i].access_token = account.access_token;
                     service.ACCOUNTS[i].expiry = account.expiry;
                     service.ACCOUNTS[i].time_created = account.time_created;
 
-                } else {
-                    service.ACCOUNTS.push(account);
+                    storeLocalAccounts();
+                    return;
                 }
-                storeLocalAccounts()
             }
+            //account does not exist. add.
+            console.log("ADDED ACCOUNT.");
+            service.ACCOUNTS.push(account);
+            storeLocalAccounts();
         }
 
 
@@ -78,7 +88,7 @@
             window.localStorage.setItem("accounts", string);
         }
 
-        
+
 
 
 
@@ -125,8 +135,10 @@
         }
 
 
-
-        
+        service.getAccounts();
+        console.log("ACCOUNTS: ");
+        console.log(service.ACCOUNTS);
+        console.log(window.localStorage.getItem("accounts"));
         return service;
     }
 

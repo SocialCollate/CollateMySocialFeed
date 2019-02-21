@@ -27,24 +27,30 @@
         /*LOGIN FB*/ 
         vm.FBLogin = function(){
             $cordovaOauth.facebook("954844384905992", ["user_posts"]).then(function(result) {
+                let ACCOUNTS = accountsSrvc.getAccounts();
+                
+                console.log(ACCOUNTS);
+
                 let nextAccountNum;
-                if(vm.ACCOUNTS.length == 0){
+                if(ACCOUNTS.length == 0){
                     nextAccountNum =1;
                 }
                 else{
-                    vm.ACCOUNTS[vm.ACCOUNTS.length-1].account_num
+                    ACCOUNTS[ACCOUNTS.length-1].account_num;
                 }
                 //results
                 let account = {
                     account_num : nextAccountNum,
                     platform_name: "facebook",
                     access_token : result.access_token,
-                    expiry : result.expires,
+                    expiry : result.expiresIn,
                     time_created : Date.now()
                 }
                 
                 accountsSrvc.storeAccount(account);
 
+
+                console.log("added account. no accounts: "+ACCOUNTS.length);
                 $state.go("accounts_list");
 
                 //search by account_num

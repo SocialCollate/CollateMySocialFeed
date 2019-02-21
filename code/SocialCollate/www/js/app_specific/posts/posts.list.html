@@ -13,14 +13,18 @@
         <div ng-hide="!vm.noEvents">
 
             <ion-list>
-                <ion-item ng-click="vm.onItemSelected($index)" ng-repeat="event in vm.events">
-                    {{event.name}}
+                <ion-item ng-click="vm.onItemSelected($index)" ng-repeat="post in vm.POSTS">
+                    {{post.description}}
+                    {{post.picture}}
+                    {{post.like}}
+                    {{post.share}}
+                    {{post.comment}}
+                    {{post.username}}
+                    {{post.userPicture}}
+                    {{post.date}}
                 </ion-item>
             </ion-list>
-
         </div>
-
-        
 
         <div ng-hide="!vm.noEvents" style="text-align: center; position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);">
             <h1 class="light">No Items Yet!</h1>

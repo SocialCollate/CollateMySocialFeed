@@ -80,50 +80,50 @@
 
         return service;
 
-    }
-
-    service.deleteAccount = function (account) {
-
-        var index = checkIndex(account);
-
-        //index of account comes from the checkIndex function
-        //array slice saves a shallow copy of array list need to look more into this
-        ACCOUNTS = ACCOUNTS.slice(index, 1);
-
-        // use existing fuction to store new array list
-        storeLocalAccounts();
 
 
-    }
+        service.deleteAccount = function (account) {
 
-    function getDeets(account){
-        //return new obj with data.
-        // data : {name:bob,...}
-        account = ACCOUNT[checkIndex(account)];
+            var index = checkIndex(account);
 
-        switch (account.platform_name.toLowerCase()){
-            case "facebook": 
-                FB.api('/me', {fields: 'first_name, last_name, email'}, function(response){
-                    console.log("response");
-                });
-            break;
-            case "twitter": 
-            
-            break;
+            //index of account comes from the checkIndex function
+            //array slice saves a shallow copy of array list need to look more into this
+            ACCOUNTS = ACCOUNTS.slice(index, 1);
+
+            // use existing fuction to store new array list
+            storeLocalAccounts();
+
+
+        }
+
+        function getDeets(account) {
+            //return new obj with data.
+            // data : {name:bob,...}
+            account = ACCOUNT[checkIndex(account)];
+
+            switch (account.platform_name.toLowerCase()) {
+                case "facebook":
+                    FB.api('/me', { fields: 'first_name, last_name, email' }, function (response) {
+                        console.log("response");
+                    });
+                    break;
+                case "twitter":
+
+                    break;
+            }
+
+        }
+
+        //function to check index of account object
+        function checkIndex(account) {
+            var index;
+            index = ACCOUNTS.findIndex(account);
+
+            //returns the index 
+            return index;
+
         }
 
     }
-
-    //function to check index of account object
-    function checkIndex(account) {
-        var index;
-        index = ACCOUNTS.findIndex(account);
-
-        //returns the index 
-        return index;
-
-    }
-
-
 
 })();

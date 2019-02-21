@@ -45,6 +45,8 @@
                 
                 accountsSrvc.storeAccount(account);
 
+                $state.go("accounts_list");
+
                 //search by account_num
 
             }, function(error) {

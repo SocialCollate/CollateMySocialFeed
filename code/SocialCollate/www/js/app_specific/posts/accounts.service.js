@@ -23,14 +23,14 @@
 
         service.ACCOUNTS = [];
         service.getAccounts = function () {
-            ACCOUNTS = [];
+            service.ACCOUNTS = [];
             //read acounts from local storage.
             let accountsStr = window.localStorage.getItem("accounts");
 
             let extractedArray = accountsStr.split(";");
             for (let i = 0; i < extractedArray.length; i++) {
                 let extractedItem = extractedArray[i].split(",");
-                ACCOUNTS[i] = {
+                service.ACCOUNTS[i] = {
                     account_num: extractedItem[0],
                     access_token: extractedItem[1],
                     expiry: extractedItem[2],
@@ -42,19 +42,19 @@
 
         service.storeAccount = function (account) {
             //store new/update old account in local storage.
-            var arrayLength = ACCOUNTS.length;
+            var arrayLength = service.ACCOUNTS.length;
 
             for (var i = 0; i < arrayLength; i++) {
 
-                if (ACCOUNTS[i].account_num == account.account_num) {
+                if (service.ACCOUNTS[i].account_num == account.account_num) {
 
-                    ACCOUNTS[i].platform_name
-                    ACCOUNTS[i].access_token = account.access_token;
-                    ACCOUNTS[i].expiry = account.expiry;
-                    ACCOUNTS[i].time_created = account.time_created;
+                    service.ACCOUNTS[i].platform_name
+                    service.ACCOUNTS[i].access_token = account.access_token;
+                    service.ACCOUNTS[i].expiry = account.expiry;
+                    service.ACCOUNTS[i].time_created = account.time_created;
 
                 } else {
-                    ACCOUNTS.push(account);
+                    service.ACCOUNTS.push(account);
                 }
                 storeLocalAccounts()
             }
@@ -62,16 +62,16 @@
 
 
         function storeLocalAccounts() {
-            var arrayLength = ACCOUNTS.length;
+            var arrayLength = service.ACCOUNTS.length;
             var string = "";
 
             for (var i = 0; i < arrayLength; i++) {
 
-                string += ACCOUNTS[i].account_num + ",";
-                string += ACCOUNTS[i].platform_name + ",";
-                string += ACCOUNTS[i].access_token + ",";
-                string += ACCOUNTS[i].expiry + ",";
-                string += ACCOUNTS[i].time_created + ";";
+                string += service.ACCOUNTS[i].account_num + ",";
+                string += service.ACCOUNTS[i].platform_name + ",";
+                string += service.ACCOUNTS[i].access_token + ",";
+                string += service.ACCOUNTS[i].expiry + ",";
+                string += service.ACCOUNTS[i].time_created + ";";
 
             }
 
@@ -88,7 +88,7 @@
 
             //index of account comes from the checkIndex function
             //array slice saves a shallow copy of array list need to look more into this
-            ACCOUNTS = ACCOUNTS.slice(index, 1);
+            service.ACCOUNTS = service.ACCOUNTS.slice(index, 1);
 
             // use existing fuction to store new array list
             storeLocalAccounts();
@@ -117,7 +117,7 @@
         //function to check index of account object
         function checkIndex(account) {
             var index;
-            index = ACCOUNTS.findIndex(account);
+            index = service.ACCOUNTS.findIndex(account);
 
             //returns the index 
             return index;

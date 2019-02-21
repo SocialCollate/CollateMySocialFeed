@@ -78,7 +78,7 @@
             window.localStorage.setItem("accounts", string);
         }
 
-        return service;
+        
 
 
 
@@ -124,6 +124,8 @@
 
         }
 
+
+        return service;
     }
 
 })();

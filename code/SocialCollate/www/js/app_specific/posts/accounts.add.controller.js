@@ -15,10 +15,11 @@
     function control(
         $state,
         $cordovaOauth,
-        eventsSrvc
+        eventsSrvc,
+        accountsSrvc
     ) {
         var vm = angular.extend(this, {
-            events : []
+            ACCOUNTS : []
         });
 
         

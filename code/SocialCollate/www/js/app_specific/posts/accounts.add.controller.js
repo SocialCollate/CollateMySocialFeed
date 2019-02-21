@@ -43,7 +43,7 @@
                     time_created : Date.now()
                 }
                 
-                vm.storeAccount(account);
+                accountsSrvc.storeAccount(account);
 
                 //search by account_num
 
@@ -78,7 +78,7 @@
             account.expiry = result.expires;
             account.time_created = Date.now();
             */
-            vm.storeAccount(account);
+           accountsSrvc.storeAccount(account);
 
             console.log(account);
 

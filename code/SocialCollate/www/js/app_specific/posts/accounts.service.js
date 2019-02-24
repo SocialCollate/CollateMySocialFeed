@@ -22,35 +22,64 @@
         };
 
         service.ACCOUNTS = [];
+
+        service.noAccounts = function () {
+            return (ACCOUNTS.length == 0);
+        }
+        function addAccountDetails(account) {
+            console.log("adding details to account plat:"+account.platform_name);
+            switch (account.platform_name.toLowerCase()) {
+                case "facebook":
+                console.log("FUNFUNFUN");
+                    FB.api('/me', { access_token: account.access_token, fields: 'name, email' }, function (response) {
+                        console.log("response");
+                        console.log(response);
+                        account.name = response.name;
+                        account.email = response.email;
+                    });
+                    break;
+                case "twitter":
+
+                    break;
+            }
+            return account;
+        }
         service.getAccounts = function () {
             console.log("getting accounts");
             service.ACCOUNTS = [];
             //read acounts from local storage.
             let accountsStr = window.localStorage.getItem("accounts");
-            console.log("LOCAL STORE: "+ window.localStorage.getItem("accounts"));
+            console.log("LOCAL STORE: " + window.localStorage.getItem("accounts"));
+            if (accountsStr == null) { window.localStorage.setItem("accounts", ""); accountsStr = ""; }
             if (accountsStr.length != 0) {
-                if (accountsStr == null) { window.localStorage.setItem("accounts", ""); accountsStr = ""; }
                 let extractedArray = accountsStr.split(";");
-                for (let i = 0; i < extractedArray.length; i++) {
+                console.log("EXTR ARRAY LEN: "+extractedArray.length);
+                console.log(extractedArray);
+                for (let i = 0; i < (extractedArray.length-1); i++) {
                     let extractedItem = extractedArray[i].split(",");
-                    service.ACCOUNTS[i] = {
+                    let account = {
                         account_num: extractedItem[0],
-                        access_token: extractedItem[1],
-                        expiry: extractedItem[2],
-                        time_created: extractedItem[3]
+                        platform_name: extractedItem[1],
+                        access_token: extractedItem[2],
+                        expiry: extractedItem[3],
+                        time_created: extractedItem[4]
                     }
+                    console.log(account);
+                    service.ACCOUNTS[i] = addAccountDetails(account);
                 }
 
             }
             //now ACCOUNTS is updated.
-            console.log("RETURNED"+service.ACCOUNTS.length);
+            console.log("RETURNED" + service.ACCOUNTS.length);
             return service.ACCOUNTS;
         }
+
+       
 
         service.storeAccount = function (account) {
             //store new/update old account in local storage.
             var arrayLength = service.ACCOUNTS.length;
-console.log("storing account");
+            console.log("storing account");
             for (var i = 0; i < arrayLength; i++) {
 
                 if (service.ACCOUNTS[i].account_num === account.account_num) {
@@ -106,22 +135,11 @@ console.log("storing account");
 
         }
 
-        function getDeets(account) {
-            //return new obj with data.
-            // data : {name:bob,...}
-            account = ACCOUNT[checkIndex(account)];
-
-            switch (account.platform_name.toLowerCase()) {
-                case "facebook":
-                    FB.api('/me', { fields: 'first_name, last_name, email' }, function (response) {
-                        console.log("response");
-                    });
-                    break;
-                case "twitter":
-
-                    break;
-            }
-
+        service.deleteAllAccounts = function () {
+            window.localStorage.setItem("accounts", "");
+            console.log("deleted all accounts");
+            service.ACCOUNTS = [];
+            return service.ACCOUNTS;
         }
 
         //function to check index of account object
@@ -135,10 +153,7 @@ console.log("storing account");
         }
 
 
-        service.getAccounts();
-        console.log("ACCOUNTS: ");
-        console.log(service.ACCOUNTS);
-        console.log(window.localStorage.getItem("accounts"));
+        //service.getAccounts();
         return service;
     }
 

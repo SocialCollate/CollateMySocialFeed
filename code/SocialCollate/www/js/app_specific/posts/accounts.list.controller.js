@@ -15,23 +15,19 @@
     function control(
         $state,
         $cordovaOauth,
-        eventsSrvc
+        eventsSrvc,
+        accountsSrvc
     ) {
         var vm = angular.extend(this, {
             accounts : []
          });
         
-
+         vm.ACCOUNTS = accountsSrvc.getAccounts();
+         console.log("loaded accounts"+vm.ACCOUNTS.length);
+         
         
-        vm.onItemSelected = function(index){
-            console.log("Item : " + index);
-
-            // we're passing parameters into the new state
-            // 'selected is an attribute in a parameter object, defined in the module definition
-            // I'm going to write the destination controller, so it knows to look for an object with a 'selected' attribute
-            $state.go('posts_detail', {selected: index});
-
-
+        vm.capitalise = function(string){
+            return (string[0].toUpperCase()+string.substring(1));
         }
         
 
@@ -55,7 +51,21 @@
 
 
 
+        vm.deleteAllAccounts = function(){
+            vm.accounts = accountsSrvc.deleteAllAccounts();
+        }
+        //Confirm dialogue 
+
+
+
+
         vm.events = eventsSrvc.getEvents();
               
     }
+
+
+
+
+
+
 })();

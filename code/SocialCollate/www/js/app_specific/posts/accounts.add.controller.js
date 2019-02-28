@@ -61,6 +61,8 @@
                 console.log("facebook login attempt failed: "+error);
             });
         }
+
+        
         /*TWITTER 
         vm.TwitterLogin = function(){
 
@@ -73,6 +75,8 @@
             });
         }
         */
+
+
 
        vm.InstaLogin = function () {
         $cordovaOauth.instagram("f2ba7a4402984ae9b41e9913226e65a6", ["basic"]).then(function (result) {

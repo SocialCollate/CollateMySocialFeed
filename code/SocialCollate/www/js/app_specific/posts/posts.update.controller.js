@@ -13,14 +13,12 @@
     
     function control(
         $state,
-        eventsSrvc
+        eventsSrvc,
+        accountsSrvc
     ) {
         var vm = angular.extend(this, {
             
          });
-        
-
-      
 
         // TODO: Error Handling
         eventsSrvc.updateEvents().then(function(){

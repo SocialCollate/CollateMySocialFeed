@@ -26,7 +26,7 @@
 
         /*LOGIN FB*/ 
         vm.FBLogin = function(){
-            $cordovaOauth.facebook("954844384905992", ["user_posts"]).then(function(result) {
+            $cordovaOauth.facebook(FB_APP_ID, ["user_posts"]).then(function(result) {
                 let ACCOUNTS = accountsSrvc.getAccounts();
                 
                 console.log(ACCOUNTS);

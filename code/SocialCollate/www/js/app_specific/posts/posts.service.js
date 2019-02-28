@@ -39,7 +39,6 @@
                 message
             }
         }
-        var APP_ID_FB = 954844384905992;
         var getPosts = function (numToGet) {
             var result = [];
             var response = [];

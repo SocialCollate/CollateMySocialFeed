@@ -18,10 +18,10 @@
         eventsSrvc
     ) {
         var vm = angular.extend(this, {
-            event : {
+            post : {
                 name: "no name",
-                date: new Date(),
-                postcode : "no location"
+                timestamp: new Date(),
+                title : "no title"
             }
          });
         
@@ -32,7 +32,7 @@
 
         var params = $stateParams;
 
-        vm.event = eventsSrvc.getEventAt(params.selected);
+        vm.post = eventsSrvc.getPostAt(params.selected);
 
         
 

@@ -15,7 +15,8 @@
     function control(
         $state,
         $stateParams,
-        eventsSrvc
+        eventsSrvc,
+        accountsSrvc
     ) {
         var vm = angular.extend(this, {
             post : {
@@ -24,7 +25,6 @@
                 title : "no title"
             }
          });
-        
 
         vm.done = function(){
             $state.go('posts_list');
@@ -33,8 +33,6 @@
         var params = $stateParams;
 
         vm.post = eventsSrvc.getPostAt(params.selected);
-
-        
 
     }
 })();

@@ -1,22 +1,23 @@
 const FACEBOOK_SERVICE = {
-    getPosts : function (account) {
-    
+    getPosts: function (account, callback) {
+
     },
-    getDetail : function (account){
+    getDetail: function (account, callback) {
         FB.api('/me', { access_token: account.access_token, fields: 'name, email' }, function (response) {
             if (response) {
                 console.log(response);
-                return {
-                    name:response.name,
-                    email:response.email
-                }
+                callback({
+                    name: response.name,
+                    email: response.email
+                });
+                return;
             }
-            else return {
-                error:"error"
-            }
+            else
+                callback({ error: "error" });
+            return;
         });
     },
-    login : function($cordovaOauth, callback){
+    login: function ($cordovaOauth, callback) {
         $cordovaOauth.facebook(FB_APP_ID, ["user_posts"]).then(function (result) {
             callback({
                 platform_name: "facebook",
@@ -25,9 +26,9 @@ const FACEBOOK_SERVICE = {
                 time_created: Date.now()
             });
             return;
-        }, function(error){
+        }, function (error) {
             console.log("facebook login attempt failed: ", error);
-            callback({error});
+            callback({ error });
             return;
         });
 

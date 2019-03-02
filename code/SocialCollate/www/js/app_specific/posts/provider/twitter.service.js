@@ -1,8 +1,8 @@
 const TWITTER_SERVICE = {
-    getPosts : function (account) {
+    getPosts : function (account, callback) {
     
     },
-    getDetail : function (account){
+    getDetail : function (account, callback){
        
     },
     login : function ($cordovaOauth, callback) {
@@ -12,6 +12,7 @@ const TWITTER_SERVICE = {
                 platform_name: "twitter",
                 access_token: result.oauth_token+"$"+result.oauth_token_secret,
             });
+            return;
         }, function(error){
             console.log("twitter login attempt failed: ", error);
             callback({error});

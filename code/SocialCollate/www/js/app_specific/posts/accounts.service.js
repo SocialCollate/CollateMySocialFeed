@@ -38,9 +38,10 @@
         function addAccountDetails(account) {
             console.log("adding details to account plat:" + account.platform_name);
             if (service.service_mapping[account.platform_name]) {
-                let account_detail = service.service_mapping[account.platform_name].getDetail(account);
-                account.name = account_detail.name;
-                account.email = account_detail.email;
+                service.service_mapping[account.platform_name].getDetail(account, function (account_detail) {
+                    account.name = account_detail.name;
+                    account.email = account_detail.email;
+                });
             }
             return account;
         }
@@ -60,10 +61,16 @@
                     let account = {
                         account_num: extractedItem[0],
                         platform_name: extractedItem[1],
-                        access_token: extractedItem[2],
-                        expiry: extractedItem[3],
-                        time_created: extractedItem[4]
                     }
+
+                    //add params based on platform scheme
+                    let scheme = service.service_mapping[account.platform_name].scheme;
+                    let scheme_array = scheme.split(",");
+                    for (let s = 0; s < scheme_array.length; s++) {
+                        //add param.
+                        account[scheme_array[s]] = extractedItem[2 + s];
+                    }
+
                     console.log(account);
                     service.ACCOUNTS[i] = addAccountDetails(account);
                 }
@@ -87,10 +94,12 @@
 
                     service.ACCOUNTS[i].platform_name = account.platform_name;
                     service.ACCOUNTS[i].access_token = account.access_token;
-                    if (account.expiry && account.time_created) {
-                        service.ACCOUNTS[i].expiry = account.expiry;
-                        service.ACCOUNTS[i].time_created = account.time_created;
+
+                    let scheme_array = service.service_mapping[account.platform_name].scheme.split(",");
+                    for (let s = 0; s < scheme_array.length; s++) {
+                        service.ACCOUNTS[i][scheme_array[s]] = result[scheme_array[s]];
                     }
+
 
                     storeLocalAccounts();
                     return;
@@ -108,21 +117,15 @@
             var string = "";
 
             for (var i = 0; i < arrayLength; i++) {
-                if (service.ACCOUNTS[i].expiry && service.ACCOUNTS[i].time_created) {
-                    string += service.ACCOUNTS[i].account_num + ",";
-                    string += service.ACCOUNTS[i].platform_name + ",";
-                    string += service.ACCOUNTS[i].access_token + ",";
 
-                    string += service.ACCOUNTS[i].expiry + ",";
-                    string += service.ACCOUNTS[i].time_created + ";";
+                string += service.ACCOUNTS[i].account_num + ",";
+                string += service.ACCOUNTS[i].platform_name + ",";
+
+                let scheme_array = service.service_mapping[service.ACCOUNTS[i].platform_name].scheme.split(",");
+                for (let s = 0; s < scheme_array.length; s++) {
+                    service.ACCOUNTS[i][scheme_array[s]] = result[scheme_array[s]];
                 }
-                else {
-                    string += service.ACCOUNTS[i].account_num + ",";
-                    string += service.ACCOUNTS[i].platform_name + ",";
-                    string += service.ACCOUNTS[i].access_token + ";";
 
-
-                }
 
             }
 

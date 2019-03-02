@@ -1,4 +1,5 @@
 const FACEBOOK_SERVICE = {
+    scheme: "access_token,expires_in,time_created",
     getPosts: function (account, callback) {
 
     },
@@ -22,7 +23,7 @@ const FACEBOOK_SERVICE = {
             callback({
                 platform_name: "facebook",
                 access_token: result.access_token,
-                expiry: result.expires_in,
+                expires_in: result.expires_in,
                 time_created: Date.now()
             });
             return;

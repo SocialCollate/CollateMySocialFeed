@@ -46,23 +46,16 @@
                         }
                         //results
                         console.log(result);
-                        let account;
-                        if (result.expiry && result.time_created){
-                            account = {
-                                account_num: nextAccountNum,
-                                platform_name,
-                                access_token: result.access_token,
-                                expiry: result.expiry,
-                                time_created: result.time_created
-                            }
+                        let account = {
+                            account_num:nextAccountNum,
+                            platform_name,
+                        };
+
+                        let scheme_array = accountsSrvc.service_mapping[platform_name].scheme.split(",");
+                        for(let s=0;s< scheme_array.length; s++){
+                            account[scheme_array[s]] = result[scheme_array[s]];
                         }
-                        else {
-                            account = {
-                                account_num: nextAccountNum,
-                                platform_name,
-                                access_token: result.access_token,
-                            }
-                        }
+                        
                         
                         accountsSrvc.storeAccount(account);
     

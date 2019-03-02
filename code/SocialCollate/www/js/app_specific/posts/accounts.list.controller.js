@@ -7,14 +7,12 @@
 
     control.$inject = [
         '$state',
-        '$cordovaOauth',
         'eventsSrvc',
         'accountsSrvc'
         ];
     
     function control(
         $state,
-        $cordovaOauth,
         eventsSrvc,
         accountsSrvc
     ) {

@@ -17,45 +17,27 @@
         moment
     ) {
 
-        let service_mapping = {
-            facebook : {
-                getPosts : FB_GET_POSTS,
-                getDetail : FB_GET_DETAIL,
-            },
-            twitter : {
-                getPosts : TWITTER_GET_POSTS,
-                getDetail : TWITTER_GET_DETAIL,
-            }
-        };
-
         var service = {
 
         };
 
         service.ACCOUNTS = [];
 
+        service.service_mapping = {};
+
+        //add plugins for providers
+        service.service_mapping["facebook"] = FACEBOOK_SERVICE;
+        service.service_mapping["twitter"] = TWITTER_SERVICE;
+
+        
+        
+
         service.noAccounts = function () {
             return (ACCOUNTS.length == 0);
         }
         function addAccountDetails(account) {
             console.log("adding details to account plat:"+account.platform_name);
-            switch (account.platform_name.toLowerCase()) {
-                case "facebook":
-                console.log("FUNFUNFUN");
-                    service_mapping.FB_GET_DETAIL(function (response){
-                        console.log("response");
-                        console.log(response);
-                        account.name = response.name;
-                        account.email = response.email;
-                    });
-                    FB.api('/me', { access_token: account.access_token, fields: 'name, email' }, function (response) {
-                        
-                    });
-                    break;
-                case "twitter":
-
-                    break;
-            }
+            
             return account;
         }
         service.getAccounts = function () {

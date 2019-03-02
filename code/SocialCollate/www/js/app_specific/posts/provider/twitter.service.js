@@ -10,9 +10,7 @@ const TWITTER_SERVICE = {
             console.log(result, "twitter response");
             callback({
                 platform_name: "twitter",
-                access_token: result.access_token,
-                expiry: result.expires_in,
-                time_created: Date.now()
+                access_token: result.oauth_token+"$"+result.oauth_token_secret,
             });
         }, function(error){
             console.log("twitter login attempt failed: ", error);

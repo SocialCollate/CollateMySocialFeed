@@ -29,15 +29,17 @@
         service.service_mapping["facebook"] = FACEBOOK_SERVICE;
         service.service_mapping["twitter"] = TWITTER_SERVICE;
 
-        
-        
+
+
 
         service.noAccounts = function () {
             return (ACCOUNTS.length == 0);
         }
         function addAccountDetails(account) {
-            console.log("adding details to account plat:"+account.platform_name);
-            
+            console.log("adding details to account plat:" + account.platform_name);
+            if (service.service_mapping[account.platform_name]) {
+
+            }
             return account;
         }
         service.getAccounts = function () {
@@ -49,9 +51,9 @@
             if (accountsStr == null) { window.localStorage.setItem("accounts", ""); accountsStr = ""; }
             if (accountsStr.length != 0) {
                 let extractedArray = accountsStr.split(";");
-                console.log("EXTR ARRAY LEN: "+extractedArray.length);
+                console.log("EXTR ARRAY LEN: " + extractedArray.length);
                 console.log(extractedArray);
-                for (let i = 0; i < (extractedArray.length-1); i++) {
+                for (let i = 0; i < (extractedArray.length - 1); i++) {
                     let extractedItem = extractedArray[i].split(",");
                     let account = {
                         account_num: extractedItem[0],
@@ -70,7 +72,7 @@
             return service.ACCOUNTS;
         }
 
-       
+
 
         service.storeAccount = function (account) {
             //store new/update old account in local storage.
@@ -80,10 +82,13 @@
 
                 if (service.ACCOUNTS[i].account_num === account.account_num) {
 
+
                     service.ACCOUNTS[i].platform_name = account.platform_name;
                     service.ACCOUNTS[i].access_token = account.access_token;
-                    service.ACCOUNTS[i].expiry = account.expiry;
-                    service.ACCOUNTS[i].time_created = account.time_created;
+                    if (account.expiry && account.time_created) {
+                        service.ACCOUNTS[i].expiry = account.expiry;
+                        service.ACCOUNTS[i].time_created = account.time_created;
+                    }
 
                     storeLocalAccounts();
                     return;
@@ -101,12 +106,21 @@
             var string = "";
 
             for (var i = 0; i < arrayLength; i++) {
+                if (service.ACCOUNTS[i].expiry && service.ACCOUNTS[i].time_created) {
+                    string += service.ACCOUNTS[i].account_num + ",";
+                    string += service.ACCOUNTS[i].platform_name + ",";
+                    string += service.ACCOUNTS[i].access_token + ",";
 
-                string += service.ACCOUNTS[i].account_num + ",";
-                string += service.ACCOUNTS[i].platform_name + ",";
-                string += service.ACCOUNTS[i].access_token + ",";
-                string += service.ACCOUNTS[i].expiry + ",";
-                string += service.ACCOUNTS[i].time_created + ";";
+                    string += service.ACCOUNTS[i].expiry + ",";
+                    string += service.ACCOUNTS[i].time_created + ";";
+                }
+                else {
+                    string += service.ACCOUNTS[i].account_num + ",";
+                    string += service.ACCOUNTS[i].platform_name + ",";
+                    string += service.ACCOUNTS[i].access_token + ";";
+
+
+                }
 
             }
 

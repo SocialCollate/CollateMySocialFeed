@@ -42,18 +42,28 @@
                             nextAccountNum = 1;
                         }
                         else {
-                            ACCOUNTS[ACCOUNTS.length - 1].account_num;
+                            nextAccountNum = ACCOUNTS[ACCOUNTS.length - 1].account_num + 1;
                         }
                         //results
                         console.log(result);
-                        let account = {
-                            account_num: nextAccountNum,
-                            platform_name,
-                            access_token: result.access_token,
-                            expiry: result.expiry,
-                            time_created: result.time_created
+                        let account;
+                        if (result.expiry && result.time_created){
+                            account = {
+                                account_num: nextAccountNum,
+                                platform_name,
+                                access_token: result.access_token,
+                                expiry: result.expiry,
+                                time_created: result.time_created
+                            }
                         }
-    
+                        else {
+                            account = {
+                                account_num: nextAccountNum,
+                                platform_name,
+                                access_token: result.access_token,
+                            }
+                        }
+                        
                         accountsSrvc.storeAccount(account);
     
     

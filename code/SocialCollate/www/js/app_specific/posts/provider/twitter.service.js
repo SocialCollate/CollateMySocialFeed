@@ -31,7 +31,7 @@ const TWITTER_SERVICE = {
     },
     getDetail : function (account, callback){
         console.log(account.user_id);
-       get("https://api.twitter.com/1.1/users/show.json",["authorization:OAuth", "oauth_consumer_key:\""+account.consumer_key+"\""],["user_id="+account.user_id], function(result){
+       get("https://api.twitter.com/1.1/users/show.json",['authorization:OAuth oauth_consumer_key="'+account.consumer_key+'",oauth_nonce="'+generate_oauth_nonce()+'",oauth_signature="'+get_oauth_signature()+'",oauth_signature_method="HMAC-SHA1",oauth_timestamp='+Date.now()],["user_id="+account.user_id], function(result){
             console.log(result);
             callback(result);
        });

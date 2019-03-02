@@ -121,12 +121,14 @@
                 string += service.ACCOUNTS[i].account_num + ",";
                 string += service.ACCOUNTS[i].platform_name + ",";
 
+                //add scheme params.
                 let scheme_array = service.service_mapping[service.ACCOUNTS[i].platform_name].scheme.split(",");
                 for (let s = 0; s < scheme_array.length; s++) {
-                    service.ACCOUNTS[i][scheme_array[s]] = result[scheme_array[s]];
+                    string += service.ACCOUNTS[i][scheme_array[s]];
+                    if (s < scheme_array.length - 1)
+                        string += ","
+                    else string += ";";
                 }
-
-
             }
 
             window.localStorage.setItem("accounts", string);

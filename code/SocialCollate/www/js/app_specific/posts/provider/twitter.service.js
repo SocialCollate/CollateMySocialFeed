@@ -1,11 +1,17 @@
-// byte packing/unpacking by Mike Samuel (https://codereview.stackexchange.com/questions/3569/pack-and-unpack-bytes-to-strings)
+
+
+
+
+
+
 function serialise_params(params) {
     let serial = "";
     let first = true;
-    for (let p = 0; p < params.length; p++) {
+    let keys = Object.keys(params);
+    for (let p = 0; p < keys.length; p++) {
         if (first) first = false;
         else serial += "&";
-        serial += params[p];
+        serial += params[keys[p]];
     }
     return serial;
 }
@@ -19,14 +25,17 @@ function addHeaders(Httpreq, headers) {
 function get(url, headers, params, callback) {
     var Httpreq = new XMLHttpRequest();
     let url_req = url + "?" + serialise_params(params);
-    console.log(url_req);
     Httpreq.open("GET", url_req, false);
     Httpreq = addHeaders(Httpreq, headers);
     Httpreq.onload = function () { callback(JSON.parse(Httpreq.response)) };
-    Httpreq.send();
+    Httpreq.send(null);
 }
 function generate_oauth_nonce(account) {
-    return Date.now() * account.account_num;
+    let base = (Date.now() * account.account_num).toString();
+    let sha = new jsSHA(base, "TEXT");
+    let nonce = sha.getHash("SHA-1", "B64");
+    console.log("nonce: " + nonce);
+    return nonce;
 }
 function toHex(nibble) {
     let hexes = ["A", "B", "C", "D", "E", "F"];
@@ -43,19 +52,19 @@ function toHex(nibble) {
 //https://developer.twitter.com/en/docs/basics/authentication/guides/percent-encoding-parameters.html
 function percentEncode(string) {
     //convert string to byte array
-    let src = string;
+    console.log("encoding ", string);
+    let src = string.toString();
     let dst = "";
     //iterate through bytes.
     for (let c = 0; c < src.length; c++) {
         // 1: get next byte.
-        let char = src.charCodeAt(c);
+        let char = src[c].charCodeAt(0);
         // 2: check if in table
-        if ((char >= 48 && char <= 57) || (char >= 65 && char <= 90) || (char >= 97 && char <= 122) || (char == 45) || (char == 46) || (char == 126)) {
+        if ((char >= 48 && char <= 57) || (char >= 65 && char <= 90) || (char >= 97 && char <= 122) || (char == 45) || (char == 46) || (char == 95) || (char == 126)) {
             //2a: copy to dst
             dst += String.fromCharCode(char);
         }
         else {
-            console.log(char);
             //2b: continue - encode
             //3: write %
             dst += "%";
@@ -81,11 +90,11 @@ function percentEncodeKeyValue(params) {
     }
     return result;
 }
-function get_oauth_signature(account, nonce, url, params, timestamp) {
+function get_oauth_signature(method, account, url, params, nonce, timestamp) {
     //see creating a oauth signature.
     //https://developer.twitter.com/en/docs/basics/authentication/guides/creating-a-signature.html
     //add method and base url
-    let method = "GET";
+    method = method.toUpperCase();
     let base_url = url;
     //add oauth to params
     params.oauth_consumer_key = TWITTER_CONSUMER_KEY;
@@ -97,42 +106,82 @@ function get_oauth_signature(account, nonce, url, params, timestamp) {
 
     params = percentEncodeKeyValue(params);
 
-    let keys = sort(Object.keys(params));
+    let keys = Object.keys(params).sort();
 
-    let parameters = "";
+    console.log("SORTED KEYS: ",keys);
+
+    let parameter_string = "";
 
     //construct parameter string.
     for (let i = 0; i < keys.length; i++) {
-        parameters += keys[i] + "=" + params[keys[i]];
-        if (i < (keys.length-1)) parameters += "&";
+        parameter_string += keys[i] + "=" + params[keys[i]];
+        if (i < (keys.length - 1)) parameter_string += "&";
     }
 
-    // construct signature base.
-    let signature_base = method.toUpperCase() + "&" + percentEncode(url) + "&" + percentEncode(parameters);
+    console.log("parameter_string", parameter_string);
 
+    // construct signature base.
+    let signature_base = method.toUpperCase() + "&" + percentEncode(base_url) + "&" + percentEncode(parameter_string);
+
+    console.log("sig base", signature_base);
     //get secrets
     let consumer_secret = TWITTER_CONSUMER_SECRET;
+
     let token_secret = account.oauth_token_secret;
 
+    console.log("token secret", token_secret);
+
     //create signing key
-    let signing_key = percentEncode(consumer_secret) + "&"+ percentEncode(token_secret);
+    let signing_key = percentEncode(consumer_secret) + "&" + percentEncode(token_secret);
+
+    console.log("SIG_BASE: ", signature_base);
+    console.log("SIGN_KEY: ", signing_key);
+
 
     //hash base and key to produce signature.
-    let oauth_signature = hash_hmac(signature_base, signing_key);
+    let sha = new jsSHA(signature_base, "TEXT");
 
+    let oauth_signature = sha.getHMAC(signing_key, "TEXT", "SHA-1", "B64");
+    console.log("signature: ", oauth_signature);
     return oauth_signature;
 }
-function generateAuthHeader(account, url, params) {
+function constructAuthHead(params) {
+    //https://developer.twitter.com/en/docs/basics/authentication/guides/authorizing-a-request
+    let dst = "OAuth ";
+    for (let i = 0; i < Object.keys(params).length; i++) {
+        dst += percentEncode(Object.keys(params)[i]);
+        dst += "=";
+        dst += "\"";
+        dst += percentEncode(params[Object.keys(params)[i]]);
+        dst += "\"";
+        if (i < Object.keys(params).length - 1) dst += ", ";
+    }
+    return dst;
+}
+
+function generateAuthHeader(method, account, url, params) {
+    let timestamp = Math.floor(new Date().getTime()/1000.0).toString();
+    //let timestamp = "1318622958";
     let nonce = generate_oauth_nonce(account);
-    let timestamp = Date.now();
-    return 'Authorization: OAuth ' +
-        'oauth_consumer_key="' + TWITTER_CONSUMER_KEY + '",' +
-        'oauth_nonce="' + nonce + '",' +
-        'oauth_signature="' + get_oauth_signature(account, nonce, url, params, timestamp) + '",' +
-        'oauth_signature_method="HMAC-SHA1",' +
-        'oauth_timestamp="' + timestamp + '",' +
-        'oauth_token="' + account.oauth_token + '",' +
-        'oauth_version="1.0"';
+    //let nonce = "kYjzVBB8Y0ZFabxSWbWovY3uYSQ2pTgmZeNu2VS4cg";
+
+    console.log(params);
+
+    //add oauth to params
+    let oauth = {
+        oauth_consumer_key: TWITTER_CONSUMER_KEY,
+        oauth_nonce: nonce,
+        oauth_signature: get_oauth_signature(method, account, url, params, nonce, timestamp),
+        oauth_signature_method: "HMAC-SHA1",
+        oauth_timestamp: timestamp,
+        oauth_token: account.oauth_token,
+        oauth_version: "1.0",
+    }
+
+
+    let authHeader = constructAuthHead(oauth);
+
+    return authHeader;
 }
 const TWITTER_SERVICE = {
     scheme: "user_id,oauth_token,oauth_token_secret",
@@ -140,11 +189,25 @@ const TWITTER_SERVICE = {
 
     },
     getDetail: function (account, callback) {
+        /*
+        let testAccount = {
+            oauth_token: "370773112-GmHxMAgYyLbNEtIKZeRNFsMKPR9EyMZeS9weJAEb",
+            oauth_token_secret: "LswwdoUaIvS8ltyTt5jkRh4J50vUPVVHtR2YPi5kE"
+        };
+        */
+
+        //console.log("AUTH_HEAD_FINAL: ", generateAuthHeader("POST", testAccount, "https://api.twitter.com/1.1/statuses/update.json", { "include_entities": "true", "status": "Hello Ladies + Gentlemen, a signed OAuth request!" }));
+        
+        console.log("getDetail called for ",account);
         let url = "https://api.twitter.com/1.1/users/show.json";
-        let params = ["user_id=" + account.user_id];
-        console.log("user_id: ", account.user_id);
-        get(url, [generateAuthHeader(account, url, params)], params, function (result) {
-            console.log(result);
+        let params = {"user_id" : account.user_id};
+        
+        let authorization = generateAuthHeader("GET",account, url, params);
+        
+
+        get(url, ["Authorization: "+authorization], params, function (result) {
+            if (result.errors) console.log("FAIL: ", result.errors);
+            else console.log("SUCCESS", result);
             callback(result);
         });
     },

@@ -189,14 +189,12 @@ const TWITTER_SERVICE = {
 
     },
     getDetail: function (account, callback) {
-        /*
         let testAccount = {
             oauth_token: "370773112-GmHxMAgYyLbNEtIKZeRNFsMKPR9EyMZeS9weJAEb",
             oauth_token_secret: "LswwdoUaIvS8ltyTt5jkRh4J50vUPVVHtR2YPi5kE"
         };
-        */
 
-        //console.log("AUTH_HEAD_FINAL: ", generateAuthHeader("POST", testAccount, "https://api.twitter.com/1.1/statuses/update.json", { "include_entities": "true", "status": "Hello Ladies + Gentlemen, a signed OAuth request!" }));
+        console.log("AUTH_HEAD_FINAL: ", generateAuthHeader("POST", testAccount, "https://api.twitter.com/1.1/statuses/update.json", { "include_entities": "true", "status": "Hello Ladies + Gentlemen, a signed OAuth request!" }));
         
         console.log("getDetail called for ",account);
         let url = "https://api.twitter.com/1.1/users/show.json";

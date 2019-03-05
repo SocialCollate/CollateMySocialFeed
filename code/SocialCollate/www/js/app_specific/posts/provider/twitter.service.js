@@ -1,18 +1,17 @@
 
-
-
-
-
-
 function serialise_params(params) {
     let serial = "";
     let first = true;
     let keys = Object.keys(params);
+    console.log("SERIALISING PARAMS: ",params);
     for (let p = 0; p < keys.length; p++) {
         if (first) first = false;
         else serial += "&";
+        serial += keys[p];
+        serial += "=";
         serial += params[keys[p]];
     }
+
     return serial;
 }
 function addHeaders(Httpreq, headers) {
@@ -90,14 +89,28 @@ function percentEncodeKeyValue(params) {
     }
     return result;
 }
-function get_oauth_signature(method, account, url, params, nonce, timestamp) {
+function deepClone(obj){
+    //deep clones obj
+    let keys = Object.keys(obj);
+    let values = Object.values(obj);
+    let newObj = {};
+    for(let i =0;i<keys.length;i++){
+        newObj[keys[i]] = values[i];
+    }
+    return newObj;
+}
+function get_oauth_signature(method, account, url, req_params, nonce, timestamp) {
     //see creating a oauth signature.
     //https://developer.twitter.com/en/docs/basics/authentication/guides/creating-a-signature.html
     //add method and base url
     method = method.toUpperCase();
     let base_url = url;
+
+    let params = deepClone(req_params);
+
     //add oauth to params
     params.oauth_consumer_key = TWITTER_CONSUMER_KEY;
+    //params.oauth_consumer_key = "xvz1evFS4wEEPTGEFPHBog";
     params.oauth_nonce = nonce;
     params.oauth_signature_method = "HMAC-SHA1";
     params.oauth_timestamp = timestamp;
@@ -108,7 +121,7 @@ function get_oauth_signature(method, account, url, params, nonce, timestamp) {
 
     let keys = Object.keys(params).sort();
 
-    console.log("SORTED KEYS: ",keys);
+    console.log("SORTED KEYS: ", keys);
 
     let parameter_string = "";
 
@@ -126,6 +139,7 @@ function get_oauth_signature(method, account, url, params, nonce, timestamp) {
     console.log("sig base", signature_base);
     //get secrets
     let consumer_secret = TWITTER_CONSUMER_SECRET;
+    //let consumer_secret = "kAcSOqF21Fu85e7zjz7ZN2U4ZRhfV3WpwPAoE3Z7kBw";
 
     let token_secret = account.oauth_token_secret;
 
@@ -160,12 +174,12 @@ function constructAuthHead(params) {
 }
 
 function generateAuthHeader(method, account, url, params) {
-    let timestamp = Math.floor(new Date().getTime()/1000.0).toString();
+    let timestamp = Math.floor(new Date().getTime() / 1000.0).toString();
     //let timestamp = "1318622958";
     let nonce = generate_oauth_nonce(account);
     //let nonce = "kYjzVBB8Y0ZFabxSWbWovY3uYSQ2pTgmZeNu2VS4cg";
 
-    console.log(params);
+    console.log("PARAMS: ",params);
 
     //add oauth to params
     let oauth = {
@@ -189,24 +203,16 @@ const TWITTER_SERVICE = {
 
     },
     getDetail: function (account, callback) {
-        /*
-        let testAccount = {
-            oauth_token: "370773112-GmHxMAgYyLbNEtIKZeRNFsMKPR9EyMZeS9weJAEb",
-            oauth_token_secret: "LswwdoUaIvS8ltyTt5jkRh4J50vUPVVHtR2YPi5kE"
-        };
-        */
 
-        //console.log("AUTH_HEAD_FINAL: ", generateAuthHeader("POST", testAccount, "https://api.twitter.com/1.1/statuses/update.json", { "include_entities": "true", "status": "Hello Ladies + Gentlemen, a signed OAuth request!" }));
-        
-        console.log("getDetail called for ",account);
+        console.log("getDetail called for ", account);
         let url = "https://api.twitter.com/1.1/users/show.json";
-        let params = {"user_id" : account.user_id};
-        
-        let authorization = generateAuthHeader("GET",account, url, params);
-        
+        let params = { "user_id": account.user_id.toString() };
 
-        get(url, ["Authorization: "+authorization], params, function (result) {
-            if (result.errors) console.log("FAIL: ", result.errors);
+        let authorization = generateAuthHeader("GET", account, url, params);
+
+
+        get(url, ["Authorization: " + authorization], params, function (result) {
+            if (result.errors) console.log("FAIL: ", result.errors[0].code, result.errors[0].message);
             else console.log("SUCCESS", result);
             callback(result);
         });

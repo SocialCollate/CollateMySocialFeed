@@ -3,7 +3,7 @@ function serialise_params(params) {
     let serial = "";
     let first = true;
     let keys = Object.keys(params);
-    console.log("SERIALISING PARAMS: ",params);
+    console.log("SERIALISING PARAMS: ", params);
     for (let p = 0; p < keys.length; p++) {
         if (first) first = false;
         else serial += "&";
@@ -89,12 +89,12 @@ function percentEncodeKeyValue(params) {
     }
     return result;
 }
-function deepClone(obj){
+function deepClone(obj) {
     //deep clones obj
     let keys = Object.keys(obj);
     let values = Object.values(obj);
     let newObj = {};
-    for(let i =0;i<keys.length;i++){
+    for (let i = 0; i < keys.length; i++) {
         newObj[keys[i]] = values[i];
     }
     return newObj;
@@ -179,7 +179,7 @@ function generateAuthHeader(method, account, url, params) {
     let nonce = generate_oauth_nonce(account);
     //let nonce = "kYjzVBB8Y0ZFabxSWbWovY3uYSQ2pTgmZeNu2VS4cg";
 
-    console.log("PARAMS: ",params);
+    console.log("PARAMS: ", params);
 
     //add oauth to params
     let oauth = {

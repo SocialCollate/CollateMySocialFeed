@@ -29,22 +29,26 @@
 					cache: false,
 					url: '/posts_filter',
                     templateUrl: 'js/app_specific/posts/posts.detail.html',
-                    params: {'selected': 0 },
                     controller: 'postsFilterCtrl as vm'
 				})
 				.state('accounts_list', {
 					cache: false,
 					url: '/accounts_list',
                     templateUrl: 'js/app_specific/posts/accounts.list.html',
-                    params: {'selected': 0 },
                     controller: 'accountsListCtrl as vm'
 				})
 				.state('accounts_add', {
 					cache: false,
 					url: '/accounts_add',
                     templateUrl: 'js/app_specific/posts/accounts.add.html',
-                    params: {'selected': 0 },
                     controller: 'accountsAddCtrl as vm'
+				})
+				.state('account_detail', {
+					cache: false,
+					url: '/account_detail',
+                    templateUrl: 'js/app_specific/posts/accounts.detail.html',
+                    params: {'account': {} },
+                    controller: 'accountDetailCtrl as vm'
 				})
             });
 				

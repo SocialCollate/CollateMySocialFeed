@@ -11,9 +11,10 @@
         <div ng-hide="!vm.noAccounts">
 
             <ion-list>
-                <ion-item ng-repeat="account in vm.ACCOUNTS">
-                    <h2 style="float:left;">{{vm.capitalise(vm.ACCOUNTS[$index].platform_name)}}</h2>
-                    <h2 style="float:right;">{{vm.ACCOUNTS[$index].name}}</h2>
+                <ion-item ng-click="vm.showDetail(vm.ACCOUNTS[$index])"ng-repeat="account in vm.ACCOUNTS">
+                    <img width="50"height="50"style="float:left;" src={{vm.getLogo(vm.ACCOUNTS[$index].platform_name)}} alt="failed getting logo: {{vm.getLogo(vm.ACCOUNTS[$index].platform_name)}}"/>
+                    <h2 style="font-size:130%;float:right;">{{vm.ACCOUNTS[$index].name}}</h2>
+                    <h3 style="float:right;clear:right;">{{vm.ACCOUNTS[$index].identifier}}</h3>
                     <!-- TODO ADD BUTTON TO DEL-->
                     <ion-delete-button class="ion-minus-circled" ></ion-delete-button>
 

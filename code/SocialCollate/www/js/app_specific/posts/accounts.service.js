@@ -39,8 +39,9 @@
             console.log("adding details to account plat:" + account.platform_name);
             if (service.service_mapping[account.platform_name]) {
                 service.service_mapping[account.platform_name].getDetail(account, function (account_detail) {
+                    //uses account detail, same for all platforms.
                     account.name = account_detail.name;
-                    account.email = account_detail.email;
+                    account.identifier = account_detail.identifier;
                 });
             }
             return account;

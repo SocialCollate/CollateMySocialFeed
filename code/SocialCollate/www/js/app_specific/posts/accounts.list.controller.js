@@ -48,11 +48,20 @@
         }
 
 
+        vm.getLogo = function (platform_name){
+            console.log("GETTING "+ "img/"+platform_name+".png");
+            return "img/"+platform_name+".png";
+        }
+
+        vm.showDetail = function (account){
+            $state.go('account_detail', {account});
+        }
 
         vm.deleteAllAccounts = function(){
             vm.accounts = accountsSrvc.deleteAllAccounts();
         }
         //Confirm dialogue 
+
 
 
 

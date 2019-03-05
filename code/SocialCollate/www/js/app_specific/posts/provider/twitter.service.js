@@ -24,7 +24,7 @@ function addHeaders(Httpreq, headers) {
 function get(url, headers, params, callback) {
     var Httpreq = new XMLHttpRequest();
     let url_req = url + "?" + serialise_params(params);
-    Httpreq.open("GET", url_req, false);
+    Httpreq.open("GET", url_req, true);
     Httpreq = addHeaders(Httpreq, headers);
     Httpreq.onload = function () { callback(JSON.parse(Httpreq.response)) };
     Httpreq.send(null);
@@ -214,7 +214,13 @@ const TWITTER_SERVICE = {
         get(url, ["Authorization: " + authorization], params, function (result) {
             if (result.errors) console.log("FAIL: ", result.errors[0].code, result.errors[0].message);
             else console.log("SUCCESS", result);
-            callback(result);
+
+            let account_detail = {
+                name:result.name,
+                identifier:"@"+result.screen_name,
+                
+            };
+            callback(account_detail);
         });
     },
     login: function ($cordovaOauth, callback) {

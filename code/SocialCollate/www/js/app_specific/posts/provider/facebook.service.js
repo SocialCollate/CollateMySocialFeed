@@ -4,12 +4,12 @@ const FACEBOOK_SERVICE = {
 
     },
     getDetail: function (account, callback) {
-        FB.api('/me', { access_token: account.access_token, fields: 'name, email' }, function (response) {
+        FB.api('/me', { access_token: account.access_token, fields: 'first_name, name' }, function (response) {
             if (response) {
                 console.log(response);
                 callback({
-                    name: response.name,
-                    email: response.email
+                    name: response.first_name,
+                    identifier: response.name,
                 });
                 return;
             }

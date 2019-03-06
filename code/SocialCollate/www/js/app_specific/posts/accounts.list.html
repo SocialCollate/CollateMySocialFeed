@@ -11,11 +11,10 @@
         <div ng-show="vm.ACCOUNTS.length > 0">
 
             <ion-list>
-                <ion-item class="item-icon-left {{vm.getLogo(vm.ACCOUNTS[$index].platform_name)}}" ng-click="vm.showDetail(vm.ACCOUNTS[$index])"ng-repeat="account in vm.ACCOUNTS">
-                    <button ng-click="vm.deleteAccount($index)" class='button button-assertive icon ion-trash-a'></button>
-                    <button class="button icon ion-gear-a"></button>
-                    <h2>{{vm.ACCOUNTS[$index].name}}</h2>
-                    <h3>{{vm.ACCOUNTS[$index].identifier}}</h3>
+                <ion-item ng-click="vm.showDetail(vm.ACCOUNTS[$index])"ng-repeat="account in vm.ACCOUNTS">
+                    <img width="50"height="50"style="float:left;" src={{vm.getLogo(vm.ACCOUNTS[$index].platform_name)}} alt="failed getting logo"/>
+                    <h2 style="font-size:130%;float:right;">{{vm.ACCOUNTS[$index].name}}</h2>
+                    <h3 style="float:right;clear:right;">{{vm.ACCOUNTS[$index].identifier}}</h3>
 
 
                 </ion-item>

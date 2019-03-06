@@ -28,6 +28,15 @@
             $state.go('posts_update');
         }
 
+
+
+
+
+
+
+
+
+
     }
 
 

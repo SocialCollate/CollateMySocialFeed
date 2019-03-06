@@ -20,10 +20,6 @@
             accounts : []
          });
         
-         vm.ACCOUNTS = accountsSrvc.getAccounts();
-         console.log("loaded accounts"+vm.ACCOUNTS.length);
-         
-        
         vm.capitalise = function(string){
             return (string[0].toUpperCase()+string.substring(1));
         }
@@ -31,11 +27,6 @@
 
         vm.noAccounts = function(){
             return vm.accounts.length == 0;
-        }
-
-        vm.update = function(){
-            console.log("ohh");
-            $state.go('posts_update');
         }
 
         vm.addAccount = function(){
@@ -49,7 +40,8 @@
 
 
         vm.getLogo = function (platform_name){
-            return "logo-"+platform_name;
+            console.log("GETTING "+ "img/"+platform_name+".png");
+            return "img/"+platform_name+".png";
         }
 
         vm.showDetail = function (account){
@@ -59,6 +51,9 @@
         vm.deleteAllAccounts = function(){
             vm.accounts = accountsSrvc.deleteAllAccounts();
         }
+
+        vm.ACCOUNTS = accountsSrvc.getAccounts();
+         console.log("loaded accounts"+vm.ACCOUNTS.length);
         //Confirm dialogue 
     }
 

@@ -21,7 +21,11 @@
          });
 
         // TODO: Error Handling
-        postsSrvc.updateEvents().then(function(){
+        postsSrvc.updatePosts().then(function(result){
+            console.log("RESULT RECIEVED: ",result);
+            $state.go('posts_list', result);
+        }, function(rejection){
+            alert("Error encountered while getting posts: "+rejection);
             $state.go('posts_list');
         });    
     }

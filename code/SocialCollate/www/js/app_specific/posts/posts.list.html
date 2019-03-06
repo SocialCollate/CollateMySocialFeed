@@ -1,26 +1,26 @@
-<ion-view style="background-color: #272733;" can-swipe-back="false">
+<ion-view style="background-color: #272733;" can-swipe-back="false" cache-view="false">
 
     <ion-header-bar class="bar-dark" align-title="left">
         <h1 class="title" style="float:left">Social Collate</h1>
-        <button class="button button-positive col" style="float:right; width:150px; position:absolute;" ng-click="vm.accountList()">Manage Accounts</button>
+        <button class="button button-positive col" style="float:right; width:150px; position:absolute;"
+            ng-click="vm.accountList()">Manage Accounts</button>
     </ion-header-bar>
 
-    <div class="fb-login-button" data-width="150" data-size="large" data-button-type="continue_with" data-auto-logout-link="false" data-use-continue-as="false"></div>
-    
+    <div class="fb-login-button" data-width="150" data-size="large" data-button-type="continue_with"
+        data-auto-logout-link="false" data-use-continue-as="false"></div>
+
     <ion-content class="has-header">
 
 
-        <div ng-hide="!vm.noEvents">
+        <div>
 
             <ion-list>
-                <ion-item ng-click="vm.postDetail($index)" ng-repeat="post in vm.POSTS">
-                    {{post.id}}
+                <ion-item ng-repeat="post in vm.POSTS">
+                    <img width="50"height="50"style="float:left;" src={{vm.getLogo(post.platform_name)}} alt="failed getting logo"/>
+                    <h2>{{post.from}}</h2>
+                    <p>{{post.text}}</p>
                 </ion-item>
             </ion-list>
-        </div>
-
-        <div ng-hide="!vm.noEvents" style="text-align: center; position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);">
-            <h1 class="light">No Items Yet!</h1>
         </div>
 
     </ion-content>
@@ -28,7 +28,8 @@
     <ion-footer-bar class="bar bar-dark bar-footer row" style="position:fixed; bottom:0px; padding: 0px;">
         <i class="col-20"></i>
 
-        <button class="button button-positive col" style="margin: 5px; color: white;" ng-click="vm.update()" style="position: absolute; width: 50%; left: 50%; transform: translate(-50%,0%);">
+        <button class="button button-positive col" style="margin: 5px; color: white;" ng-click="vm.update()"
+            style="position: absolute; width: 50%; left: 50%; transform: translate(-50%,0%);">
             Update
         </button>
 

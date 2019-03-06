@@ -28,6 +28,7 @@ angular.module('starter', [
       if (window.StatusBar) {
         StatusBar.styleDefault();
       }
+      
       // ADDED START
       $state.go("posts_list");
       // ADDED END

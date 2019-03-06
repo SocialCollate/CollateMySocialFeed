@@ -17,7 +17,7 @@
         accountsSrvc
     ) {
         var vm = angular.extend(this, {
-            events: []
+            POSTS : []
         });
 
         vm.accountList = function(){
@@ -27,14 +27,10 @@
         vm.update = function () {
             $state.go('posts_update');
         }
-
-
-
-
-
-
-
-
+        vm.getLogo = function (platform_name){
+            return "img/"+platform_name+".png";
+        }
+            vm.POSTS = $state.params.posts;
 
 
     }

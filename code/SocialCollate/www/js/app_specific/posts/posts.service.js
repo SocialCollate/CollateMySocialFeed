@@ -24,13 +24,15 @@
         };
         service.POSTS = [];
 
-        service.getAllPosts = function (options) {
+        service.getAllPosts = async function (options, callback) {
+            service.POSTS = [];
+            console.log("USER SETTINGS: ", USER_SETTINGS);
             if (!options) options = USER_SETTINGS;
 
-            let num_posts = options.num_posts;
+            let num_posts = options.max_posts_per_account;
             let accounts = accountsSrvc.getEnabledAccounts();
             let service_mapping = accountsSrvc.service_mapping;
-
+            console.log(accounts.length+" accounts detected. ");
             //for each account
             for (let a = 0; a < accounts.length; a++) {
                 //get posts from that account
@@ -38,7 +40,9 @@
                 let platform_name = account.platform_name;
                 let platform_service = service_mapping[platform_name];
 
-                platform_service.getPosts(account, num_posts, function (posts) {
+                console.log("PLATFORM SERVICE: ",platform_service);
+
+                await platform_service.getPosts(account, num_posts, function (posts) {
                     for (let p = 0; p < posts.length; p++) {
                         service.POSTS.push(posts[p]);
                     }
@@ -53,7 +57,7 @@
             service.POSTS.splice(num_posts - 1);
 
             //return 
-            return angular.copy(service.POSTS);
+            callback(service.POSTS);
         }
 
         service.getNumPosts = function () {
@@ -63,16 +67,19 @@
         service.getPostAt = function (index) {
             return angular.copy(service.POSTS[index]);
         }
-        let timeout_time = 1000;
+        let wait_time = 1000;
         var getAllPosts = function () {
+            console.log
             var deferred = $q.defer();
-    
+
             $timeout(
                 function () {
-                    let posts = service.getAllPosts();
-                    deferred.resolve(posts);
+                    service.getAllPosts(null,function(posts){
+                        console.log("POSTS RECIEVED: ",posts);
+                        deferred.resolve(posts);
+                    });
                 },
-                timeout_time);
+                wait_time);
     
     
             return deferred.promise;
@@ -80,7 +87,7 @@
     
         var promiseToUpdatePosts = function () {
             // returns a promise
-            return getAllPosts();
+            return getAllPosts(USER_SETTINGS);
         }
     
         service.updatePosts = function () {

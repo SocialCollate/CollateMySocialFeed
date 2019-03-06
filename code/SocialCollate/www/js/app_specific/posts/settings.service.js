@@ -45,6 +45,10 @@
         }
 
         service.accountEnabled = function (account) {
+            //TODO ADD show_feeds to write storage.
+            //for now, just assume all feeds are enabled.
+            return true;
+
             //returns true if the account is enabled (if it is in the show_feeds store)
             service.getShowFeeds();
             for (let i = 0; i < service.show_feeds.length; i++) {

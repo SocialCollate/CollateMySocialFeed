@@ -9,6 +9,7 @@
 				.state('posts_list', {
 					cache: false,
 					url: '/posts_list',
+					params : {'posts':[]},
 					templateUrl: 'js/app_specific/posts/posts.list.html',
                     controller: 'postsListCtrl as vm'
                 })
@@ -16,7 +17,7 @@
 					cache: false,
 					url: '/posts_update',
 					templateUrl: 'js/app_specific/posts/posts.update.html',
-                    controller: 'eventsUpdateCtrl as vm'
+                    controller: 'postsUpdateCtrl as vm'
                 })
                 .state('posts_detail', {
 					cache: false,

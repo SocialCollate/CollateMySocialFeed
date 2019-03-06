@@ -40,7 +40,6 @@
 
 
         vm.getLogo = function (platform_name){
-            console.log("GETTING "+ "img/"+platform_name+".png");
             return "img/"+platform_name+".png";
         }
 

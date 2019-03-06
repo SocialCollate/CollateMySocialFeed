@@ -193,26 +193,32 @@ function generateAuthHeader(method, account, url, params) {
 
     return authHeader;
 }
-var createPost = function (id, from, when, caption, description, image, message) {
+function createPost(platform_name, id, from, when, text, image, stats) {
     return {
-        id,
-        from,
-        when,
-        caption,
-        description,
-        image,
-        message
+        platform_name,  //platform name
+        id,             //numeric unique to twitter requests
+        from,           //user who made request
+        when,           //unix time of date created
+        text,           //tweet text
+        image,          //tweet image
+        stats           //favourites/retweets/replies
     }
 }
+
 
 
 const TWITTER_SERVICE = {
     scheme: "user_id,oauth_token,oauth_token_secret",
     getPosts: function (account, num_posts, callback) {
-        console.log("getPosts called for ", account);
+        console.log("!!! getPosts called for ", account);
 
         let url = "https://api.twitter.com/1.1/statuses/home_timeline.json";
-        let params = {  };
+        let params = { 
+            count: num_posts,
+            exclude_replies: "true",
+            include_entities:"true",
+            tweet_mode:"extended",
+        };
 
         let authorization = generateAuthHeader("GET", account, url, params);
 
@@ -221,19 +227,34 @@ const TWITTER_SERVICE = {
             if (result.errors) console.log("FAIL: ", result.errors[0].code, result.errors[0].message);
             else console.log("SUCCESS", result);
 
-            let account_detail = {
-                name:result.name,
-                identifier:"@"+result.screen_name,
-                
-            };
-            callback(account_detail);
+            let posts = [];
+            for (let p = 0; p < result.length; p++) {
+                let tweet = result[p];
+                let date_created = new Date(tweet.created_at);
+                posts.push({
+                    platform_name: "twitter",
+                    id: tweet.id,
+                    from: "@"+tweet.user.screen_name,
+                    when: date_created,
+                    text: tweet.full_text,
+                    image: {src:tweet.entities.media_url},
+                    stats: {
+                        favorites:tweet.favorite_count,
+                        retweets:tweet.retweet_count,
+                    }
+                });
+            }
+            console.log(posts.length);
+            callback(posts);
         });
     },
     getDetail: function (account, callback) {
 
         console.log("getDetail called for ", account);
         let url = "https://api.twitter.com/1.1/users/show.json";
-        let params = { "user_id": account.user_id.toString() };
+        let params = {
+            "user_id": account.user_id.toString(),
+        };
 
         let authorization = generateAuthHeader("GET", account, url, params);
 
@@ -243,9 +264,9 @@ const TWITTER_SERVICE = {
             else console.log("SUCCESS", result);
 
             let account_detail = {
-                name:result.name,
-                identifier:"@"+result.screen_name,
-                
+                name: result.name,
+                identifier: "@" + result.screen_name,
+
             };
             callback(account_detail);
         });

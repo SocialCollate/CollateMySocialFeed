@@ -2,18 +2,18 @@
     'use strict';
 
     angular
-        .module('eventsjs')
+        .module('postsjs')
         .controller('eventsUpdateCtrl', control);
 
     control.$inject = [
         '$state',
-        'eventsSrvc',
+        'postsSrvc',
         'accountsSrvc'
         ];
     
     function control(
         $state,
-        eventsSrvc,
+        postsSrvc,
         accountsSrvc
     ) {
         var vm = angular.extend(this, {
@@ -21,7 +21,7 @@
          });
 
         // TODO: Error Handling
-        eventsSrvc.updateEvents().then(function(){
+        postsSrvc.updateEvents().then(function(){
             $state.go('posts_list');
         });    
     }

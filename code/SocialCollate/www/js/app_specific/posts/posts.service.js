@@ -2,89 +2,66 @@
     'use strict';
 
     angular
-        .module('eventsjs')
-        .factory('eventsSrvc', eventsSrvc);
+        .module('postsjs')
+        .factory('postsSrvc', postsSrvc);
 
-    eventsSrvc.$inject = [
+    postsSrvc.$inject = [
         '$q', // promises service
         '$timeout', // timeout service
-        'moment' // does dates really well
+        'moment', // does dates really well
+        'accountsSrvc' //accounts service.
     ];
 
-    function eventsSrvc(
+    function postsSrvc(
         $q,
         $timeout,
-        moment
+        moment,
+        accountsSrvc
     ) {
-        var eventsArray = [];
+        
         var service = {
 
         };
+        service.POSTS = [];
+        
+        service.getAllPosts = function (options) {
+            if (!options) options = USER_SETTINGS;
 
-        var PAUSE_FOR_A_WHILE_MS = 3000;
-        var MAX_POSTS = 20;
-
-
-        var createPost = function (id, from, when, caption, description, image, message) {
-            //see
-            //https://developers.facebook.com/docs/graph-api/reference/v3.2/post
-            //for Post attributes.
-            return {
-                id,
-                from,
-                when,
-                caption,
-                description,
-                image,
-                message
-            }
-        }
-        var getPosts = function (numToGet) {
-            var result = [];
-            var response = [];
-            //get Posts from FB
+            let num_posts = options.num_posts;
+            let accounts = accountsSrvc.getEnabledAccounts();
+            let service_mapping = accountsSrvc.service_mapping;
             
-            for (var index = 0; (index < numToGet && index < response.length); index++) {
-                let post = response[index];
-                result.push(createPost(post.id, post.from, post.created_time, post.caption, post.description, post.picture, post.message));
+            //for each account
+            for (let a = 0; a < accounts.length; a++){
+                //get posts from that account
+                let account = accounts[a];
+                let platform_name = account.platform_name;
+                let platform_service = service_mapping[platform_name];
+
+                platform_service.getPosts(account, num_posts, function(posts){
+                    for(let p = 0; p < posts.length; p++){
+                        service.POSTS.push(posts[p]);
+                    }
+                });
+
             }
-            return result;
+
+            //sort posts by date 
+            service.POSTS = service.POSTS.sort(function(x,y){return (x.when.getTime()-y.when.getTime())});
+
+            //cut old posts, leaving {num_posts} remaining posts
+            service.POSTS.splice(num_posts-1);
+
+            //return 
+            return angular.copy(service.POSTS);
         }
 
-
-        var replaceWithRealCode = function () {
-            var deferred = $q.defer();
-
-            $timeout(
-                function () {
-                    eventsArray = getPosts(MAX_POSTS);
-                    deferred.resolve(eventsArray);
-                },
-                PAUSE_FOR_A_WHILE_MS);
-
-
-            return deferred.promise;
+        service.getNumPosts = function () {
+            return service.POSTS.length;
         }
 
-        var promiseToUpdateEvents = function () {
-            // returns a promise
-            return replaceWithRealCode();
-        }
-
-        service.updateEvents = function () {
-            return promiseToUpdateEvents();
-        }
-
-        service.getEvents = function () {
-            return angular.copy(eventsArray);
-        }
-
-        service.getNumEvents = function () {
-            return eventsArray.length;
-        }
-
-        service.getEventAt = function (index) {
-            return angular.copy(eventsArray[index]);
+        service.getPostAt = function (index) {
+            return angular.copy(service.POSTS[index]);
         }
 
 

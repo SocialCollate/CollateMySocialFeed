@@ -6,7 +6,7 @@
 angular.module('starter', [
   'ionic',
   'momentjs', // ADDED used for dates
-  'eventsjs',  // ADDED our posts module
+  'postsjs',  // ADDED our posts module
   'ngCordovaOauth' //ng Cordova OAuth plugin.
 ])
 

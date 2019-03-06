@@ -2,19 +2,21 @@
     'use strict';
 
     angular
-        .module('eventsjs')
+        .module('postsjs')
         .factory('accountsSrvc', accountsSrvc);
 
     accountsSrvc.$inject = [
         '$q', // promises service
         '$timeout', // timeout service
-        'moment' // does dates really well
+        'moment', // does dates really well
+        'settingsSrvc'
     ];
 
     function accountsSrvc(
         $q,
         $timeout,
-        moment
+        moment,
+        settingsSrvc
     ) {
 
         var service = {
@@ -82,6 +84,18 @@
             return service.ACCOUNTS;
         }
 
+        service.getEnabledAccounts = function () {
+            //returns list of enabled accounts
+            let accounts = service.getAccounts();
+            let result = [];
+            for(let a=0;a<accounts.length;a++){
+                if (settingsSrvc.accountEnabled(accounts[a])){
+                    result.push(accounts[a]);
+                }
+            }
+            return result;
+        }
+        
 
 
         service.storeAccount = function (account) {

@@ -2,18 +2,18 @@
     'use strict';
 
     angular
-        .module('eventsjs')
+        .module('postsjs')
         .controller('accountsListCtrl', control);
 
     control.$inject = [
         '$state',
-        'eventsSrvc',
+        'postsSrvc',
         'accountsSrvc'
         ];
     
     function control(
         $state,
-        eventsSrvc,
+        postsSrvc,
         accountsSrvc
     ) {
         var vm = angular.extend(this, {
@@ -44,13 +44,12 @@
 
         vm.deleteAccount = function(index){
             let respond = window.confirm("Are you sure you want to delete this account?");
-            alert(respond);
+            console.log(respond);
         }
 
 
         vm.getLogo = function (platform_name){
-            console.log("GETTING "+ "img/"+platform_name+".png");
-            return "img/"+platform_name+".png";
+            return "logo-"+platform_name;
         }
 
         vm.showDetail = function (account){
@@ -61,18 +60,6 @@
             vm.accounts = accountsSrvc.deleteAllAccounts();
         }
         //Confirm dialogue 
-
-
-
-
-
-        vm.events = eventsSrvc.getEvents();
-              
     }
-
-
-
-
-
 
 })();

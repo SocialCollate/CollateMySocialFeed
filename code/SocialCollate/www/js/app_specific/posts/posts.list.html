@@ -13,15 +13,8 @@
         <div ng-hide="!vm.noEvents">
 
             <ion-list>
-                <ion-item ng-click="vm.onItemSelected($index)" ng-repeat="post in vm.POSTS">
-                    {{post.description}}
-                    {{post.picture}}
-                    {{post.like}}
-                    {{post.share}}
-                    {{post.comment}}
-                    {{post.username}}
-                    {{post.userPicture}}
-                    {{post.date}}
+                <ion-item ng-click="vm.postDetail($index)" ng-repeat="post in vm.POSTS">
+                    {{post.id}}
                 </ion-item>
             </ion-list>
         </div>

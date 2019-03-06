@@ -2,20 +2,20 @@
     'use strict';
 
     angular
-        .module('eventsjs')
+        .module('postsjs')
         .controller('eventsDetailCtrl', control);
 
     control.$inject = [
         '$state',
         '$stateParams',
-        'eventsSrvc',
+        'postsSrvc',
         'accountsSrvc'
         ];
     
     function control(
         $state,
         $stateParams,
-        eventsSrvc,
+        postsSrvc,
         accountsSrvc
     ) {
         var vm = angular.extend(this, {
@@ -32,7 +32,7 @@
 
         var params = $stateParams;
 
-        vm.post = eventsSrvc.getPostAt(params.selected);
+        vm.post = postsSrvc.getPostAt(params.selected);
 
     }
 })();

@@ -2,20 +2,20 @@
     'use strict';
 
     angular
-        .module('eventsjs')
+        .module('postsjs')
         .controller('accountsAddCtrl', control);
 
     control.$inject = [
         '$state',
         '$cordovaOauth',
-        'eventsSrvc',
+        'postsSrvc',
         'accountsSrvc'
     ];
 
     function control(
         $state,
         $cordovaOauth,
-        eventsSrvc,
+        postsSrvc,
         accountsSrvc
     ) {
         var vm = angular.extend(this, {

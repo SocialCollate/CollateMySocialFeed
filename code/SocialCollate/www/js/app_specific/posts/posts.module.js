@@ -2,7 +2,7 @@
 	'use strict';
 
 	angular
-		.module('eventsjs', [
+		.module('postsjs', [
 		])
         .config(function($stateProvider) {
 			$stateProvider
@@ -10,7 +10,7 @@
 					cache: false,
 					url: '/posts_list',
 					templateUrl: 'js/app_specific/posts/posts.list.html',
-                    controller: 'eventsListCtrl as vm'
+                    controller: 'postsListCtrl as vm'
                 })
                 .state('posts_update', {
 					cache: false,

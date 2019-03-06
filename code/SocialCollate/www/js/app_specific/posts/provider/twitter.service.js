@@ -1,4 +1,3 @@
-
 function serialise_params(params) {
     let serial = "";
     let first = true;
@@ -46,8 +45,6 @@ function toHex(nibble) {
     }
     else return "error";
 }
-
-
 //https://developer.twitter.com/en/docs/basics/authentication/guides/percent-encoding-parameters.html
 function percentEncode(string) {
     //convert string to byte array
@@ -172,7 +169,6 @@ function constructAuthHead(params) {
     }
     return dst;
 }
-
 function generateAuthHeader(method, account, url, params) {
     let timestamp = Math.floor(new Date().getTime() / 1000.0).toString();
     //let timestamp = "1318622958";
@@ -197,10 +193,41 @@ function generateAuthHeader(method, account, url, params) {
 
     return authHeader;
 }
+var createPost = function (id, from, when, caption, description, image, message) {
+    return {
+        id,
+        from,
+        when,
+        caption,
+        description,
+        image,
+        message
+    }
+}
+
+
 const TWITTER_SERVICE = {
     scheme: "user_id,oauth_token,oauth_token_secret",
-    getPosts: function (account, callback) {
+    getPosts: function (account, num_posts, callback) {
+        console.log("getPosts called for ", account);
 
+        let url = "https://api.twitter.com/1.1/statuses/home_timeline.json";
+        let params = {  };
+
+        let authorization = generateAuthHeader("GET", account, url, params);
+
+
+        get(url, ["Authorization: " + authorization], params, function (result) {
+            if (result.errors) console.log("FAIL: ", result.errors[0].code, result.errors[0].message);
+            else console.log("SUCCESS", result);
+
+            let account_detail = {
+                name:result.name,
+                identifier:"@"+result.screen_name,
+                
+            };
+            callback(account_detail);
+        });
     },
     getDetail: function (account, callback) {
 

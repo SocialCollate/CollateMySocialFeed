@@ -16,12 +16,35 @@ var createPost = function (id, from, when, caption, description, image, message)
 const FACEBOOK_SERVICE = {
     scheme: "access_token,expires_in,time_created",
     getPosts: function (account, num_posts, callback) {
+        let posts = [];
+        FB.api('/me/feed',
+        {access_token:account.access_token},
+        function (response){
+            console.log("FB getPosts response: ",response);
+            for (let p=0;p<response.length;p++){
+                let post = response[p];
 
+                posts.push({
+                    platform_name: "facebook",
+                    id: post.id,
+                    from: post.from.name,
+                    when: post.created_time,
+                    text: post.message,
+                    image: {src:post.picture},
+                    stats: {
+                        shares:post.shares,
+                    }
+                });
+
+            }
+
+            posts = posts.splice(num_posts);
+            callback(posts);
+        });
     },
     getDetail: function (account, callback) {
         FB.api('/me', { access_token: account.access_token, fields: 'first_name, name' }, function (response) {
             if (response) {
-                console.log(response);
                 callback({
                     name: response.first_name,
                     identifier: response.name,

@@ -22,17 +22,18 @@
         var service = {
 
         };
-        service.POSTS = [];
 
-        service.getAllPosts = async function (options, callback) {
-            service.POSTS = [];
+        let postsArray = [];
+
+        service.get_all_posts = async function (options, callback) {
+            postsArray = [];
             console.log("USER SETTINGS: ", USER_SETTINGS);
             if (!options) options = USER_SETTINGS;
 
             let num_posts = options.max_posts_per_account;
             let accounts = accountsSrvc.getEnabledAccounts();
             let service_mapping = accountsSrvc.service_mapping;
-            console.log(accounts.length+" accounts detected. ");
+            console.log(accounts.length + " accounts detected. ");
             //for each account
             for (let a = 0; a < accounts.length; a++) {
                 //get posts from that account
@@ -40,58 +41,66 @@
                 let platform_name = account.platform_name;
                 let platform_service = service_mapping[platform_name];
 
-                console.log("PLATFORM SERVICE: ",platform_service);
+                console.log("PLATFORM SERVICE: ", platform_service);
 
                 await platform_service.getPosts(account, num_posts, function (posts) {
                     for (let p = 0; p < posts.length; p++) {
-                        service.POSTS.push(posts[p]);
+                        postsArray.push(posts[p]);
                     }
                 });
 
             }
 
             //sort posts by date 
-            service.POSTS = service.POSTS.sort(function (x, y) { return (x.when.getTime() - y.when.getTime()) });
+            postsArray = postsArray.sort(function (x, y) { return (x.when.getTime() - y.when.getTime()) });
 
             //cut old posts, leaving {num_posts} remaining posts
-            service.POSTS.splice(num_posts - 1);
+            postsArray.splice(num_posts - 1);
+
+            console.log("posts.service.js: ",postsArray);
 
             //return 
-            callback(service.POSTS);
+            callback(angular.copy(postsArray));
         }
 
         service.getNumPosts = function () {
-            return service.POSTS.length;
+            return postsArray.length;
         }
 
+
         service.getPostAt = function (index) {
-            return angular.copy(service.POSTS[index]);
+            return angular.copy(postsArray[index]);
         }
-        let wait_time = 1000;
+        let wait_time = 3000;
         var getAllPosts = function () {
-            console.log
             var deferred = $q.defer();
 
             $timeout(
                 function () {
-                    service.getAllPosts(null,function(posts){
-                        console.log("POSTS RECIEVED: ",posts);
+                    service.get_all_posts(null, function (posts) {
+                        console.log("POSTS RECIEVED: ", posts);
+                        postsArray = posts;
                         deferred.resolve(posts);
                     });
                 },
                 wait_time);
-    
-    
+
+
             return deferred.promise;
         }
-    
+
         var promiseToUpdatePosts = function () {
             // returns a promise
-            return getAllPosts(USER_SETTINGS);
+            return getAllPosts();
         }
-    
-        service.updatePosts = function () {
+
+        service.updatePosts = async function () {
             return promiseToUpdatePosts();
+        }
+
+        service.getPosts = function () {
+            return angular.copy(postsArray);
+
         }
 
 

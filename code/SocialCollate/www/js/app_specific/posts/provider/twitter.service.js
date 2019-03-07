@@ -27,6 +27,8 @@ function get(url, headers, params, callback) {
     Httpreq = addHeaders(Httpreq, headers);
     Httpreq.onload = function () { callback(JSON.parse(Httpreq.response)) };
     Httpreq.send(null);
+
+    console.log("IMPORTANT! Twitter request sent. Minimise requests per operation to reduce chance of request limit capping.");
 }
 function generate_oauth_nonce(account) {
     let base = (Date.now() * account.account_num).toString();
@@ -193,31 +195,130 @@ function generateAuthHeader(method, account, url, params) {
 
     return authHeader;
 }
-function createPost(platform_name, id, from, when, text, image, stats) {
-    return {
-        platform_name,  //platform name
-        id,             //numeric unique to twitter requests
-        from,           //user who made request
-        when,           //unix time of date created
-        text,           //tweet text
-        image,          //tweet image
-        stats           //favourites/retweets/replies
-    }
+
+function dummy() {
+    return [
+        {
+            platform_name: "twitter",
+            id: "23489237590",
+            from: "@" + "borisjohnson",
+            when: new Date("Wed Mar 06 2019 21:53:32 GMT+0000"),
+            text: "I invented a bicycle.",
+            image: { src: null },
+            stats: {
+                favorites: 1,
+                retweets: 5,
+            }
+        },
+        {
+            platform_name: "twitter",
+            id: "23489237595",
+            from: "@" + "theresamay",
+            when: new Date("Wed Mar 06 2017 21:53:32 GMT+0000"),
+            text: "I'm not PM yet...",
+            image: { src: null },
+            stats: {
+                favorites: 0,
+                retweets: 2,
+            },
+        },
+        {
+            platform_name: "twitter",
+            id: "23489237590",
+            from: "@" + "borisjohnson",
+            when: new Date("Wed Mar 06 2019 21:53:32 GMT+0000"),
+            text: "I invented a bicycle.",
+            image: { src: null },
+            stats: {
+                favorites: 1,
+                retweets: 5,
+            }
+        },
+        {
+            platform_name: "twitter",
+            id: "23489237595",
+            from: "@" + "theresamay",
+            when: new Date("Wed Mar 06 2017 21:53:32 GMT+0000"),
+            text: "I'm not PM yet...",
+            image: { src: null },
+            stats: {
+                favorites: 0,
+                retweets: 2,
+            },
+        },
+        {
+            platform_name: "twitter",
+            id: "23489237590",
+            from: "@" + "borisjohnson",
+            when: new Date("Wed Mar 06 2019 21:53:32 GMT+0000"),
+            text: "I invented a bicycle.",
+            image: { src: null },
+            stats: {
+                favorites: 1,
+                retweets: 5,
+            }
+        },
+        {
+            platform_name: "twitter",
+            id: "23489237595",
+            from: "@" + "theresamay",
+            when: new Date("Wed Mar 06 2017 21:53:32 GMT+0000"),
+            text: "I'm not PM yet...",
+            image: { src: null },
+            stats: {
+                favorites: 0,
+                retweets: 2,
+            },
+        },
+        {
+            platform_name: "twitter",
+            id: "23489237590",
+            from: "@" + "borisjohnson",
+            when: new Date("Wed Mar 06 2019 21:53:32 GMT+0000"),
+            text: "I invented a bicycle.",
+            image: { src: null },
+            stats: {
+                favorites: 1,
+                retweets: 5,
+            }
+        },
+        {
+            platform_name: "twitter",
+            id: "23489237595",
+            from: "@" + "theresamay",
+            when: new Date("Wed Mar 06 2017 21:53:32 GMT+0000"),
+            text: "I'm not PM yet...",
+            image: { src: null },
+            stats: {
+                favorites: 0,
+                retweets: 2,
+            },
+        },
+
+    ];
 }
 
 
 
 const TWITTER_SERVICE = {
+    dummy: false,
     scheme: "user_id,oauth_token,oauth_token_secret",
     getPosts: function (account, num_posts, callback) {
+
+        //DEBUG - supply dummy tweets
+        if (this.dummy) {
+            callback(dummyData);
+            return;
+        }
+
         console.log("!!! getPosts called for ", account);
 
         let url = "https://api.twitter.com/1.1/statuses/home_timeline.json";
-        let params = { 
+        let params = {
             count: num_posts,
             exclude_replies: "true",
-            include_entities:"true",
-            tweet_mode:"extended",
+            include_entities: "true",
+            tweet_mode: "extended",
         };
 
         let authorization = generateAuthHeader("GET", account, url, params);
@@ -234,21 +335,23 @@ const TWITTER_SERVICE = {
                 posts.push({
                     platform_name: "twitter",
                     id: tweet.id,
-                    from: "@"+tweet.user.screen_name,
+                    from: "@" + tweet.user.screen_name,
                     when: date_created,
                     text: tweet.full_text,
-                    image: {src:tweet.entities.media_url},
+                    image: { src: tweet.entities.media_url },
                     stats: {
-                        favorites:tweet.favorite_count,
-                        retweets:tweet.retweet_count,
+                        favorites: tweet.favorite_count,
+                        retweets: tweet.retweet_count,
                     }
                 });
             }
-            console.log(posts.length);
+            console.log("twitter.service.js: posts.length = ", posts.length);
             callback(posts);
         });
     },
     getDetail: function (account, callback) {
+
+
 
         console.log("getDetail called for ", account);
         let url = "https://api.twitter.com/1.1/users/show.json";

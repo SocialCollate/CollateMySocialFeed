@@ -38,8 +38,8 @@
             return (ACCOUNTS.length == 0);
         }
         function addAccountDetails(account) {
-            console.log("adding details to account plat:" + account.platform_name);
-            if (service.service_mapping[account.platform_name]) {
+            if (service.service_mapping[account.platform_name] && ((account.name)===null||(account.name===undefined))) {
+                console.log("adding details to account plat:" + account.platform_name);
                 service.service_mapping[account.platform_name].getDetail(account, function (account_detail) {
                     //uses account detail, same for all platforms.
                     account.name = account_detail.name;

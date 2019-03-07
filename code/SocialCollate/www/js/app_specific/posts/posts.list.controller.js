@@ -7,32 +7,31 @@
 
     control.$inject = [
         '$state',
+        'accountsSrvc',
         'postsSrvc',
-        'accountsSrvc'
     ];
 
     function control(
         $state,
+        accountsSrvc,
         postsSrvc,
-        accountsSrvc
     ) {
         var vm = angular.extend(this, {
-            POSTS : []
+            posts: []
         });
 
         vm.accountList = function(){
             $state.go('accounts_list');
         }
-
         vm.update = function () {
             $state.go('posts_update');
         }
         vm.getLogo = function (platform_name){
             return "img/"+platform_name+".png";
         }
-            vm.POSTS = $state.params.posts;
 
-
+        vm.posts = postsSrvc.getPosts();
+        console.log("TEST: ",vm.posts, postsSrvc.getPosts());
     }
 
 

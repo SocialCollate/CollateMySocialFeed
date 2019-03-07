@@ -15,10 +15,13 @@
         <div>
 
             <ion-list>
-                <ion-item ng-repeat="post in vm.POSTS">
-                    <img width="50"height="50"style="float:left;" src={{vm.getLogo(post.platform_name)}} alt="failed getting logo"/>
-                    <h2>{{post.from}}</h2>
-                    <p>{{post.text}}</p>
+                <ion-item ng-repeat="post in vm.posts">
+                    <img width="50"height="50"style="float:left;margin-right:" src={{vm.getLogo(post.platform_name)}} alt="failed getting logo"/>
+                    <div style="position:relative;left:15px;margin-top:5px;">
+                        <h2>{{post.from}}</h2>
+                        <p>{{post.text}}</p>
+                    </div>
+                    
                 </ion-item>
             </ion-list>
         </div>

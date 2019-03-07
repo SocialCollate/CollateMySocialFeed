@@ -20,12 +20,12 @@
 
         // TODO: Error Handling
         console.log("UPDATE POSTS");
-        postsSrvc.updatePosts().then(function(result){
-            console.log("RESULT RECIEVED: ",result);
-            $state.go('posts_list', {posts:result});
-        }, function(rejection){
-            alert("Error encountered while getting posts: "+rejection);
+        postsSrvc.updatePosts().then(function(posts){
+            console.log("posts.update.controller: ",posts);
+            $state.go('posts_list', {posts});
+        }, function(error){
+            alert("Error encountered while getting posts: "+error);
             $state.go('posts_list');
-        });    
+        });   
     }
 })();

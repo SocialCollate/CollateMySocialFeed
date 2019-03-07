@@ -43,16 +43,26 @@
             return "img/"+platform_name+".png";
         }
 
-        vm.showDetail = function (account){
-            $state.go('account_detail', {account});
+        vm.showDetail = function (account_index){
+            $state.go('account_detail', {accounts:vm.accounts,selected:account_index});
         }
 
         vm.deleteAllAccounts = function(){
             vm.accounts = accountsSrvc.deleteAllAccounts();
         }
 
-        vm.ACCOUNTS = accountsSrvc.getAccounts();
-         console.log("loaded accounts"+vm.ACCOUNTS.length);
+        vm.goBack = function(){
+            $state.go("posts_list");
+        }
+
+        if ($state.params.accounts.length > 0){
+            vm.accounts = angular.copy($state.params.accounts);
+            console.log("copied accounts from params.");
+        }
+        else if (vm.accounts.length==0||vm.accounts===null||vm.accounts===undefined){
+            vm.accounts = accountsSrvc.getAccounts();
+            console.log("loaded accounts ",vm.accounts);
+        }
         //Confirm dialogue 
     }
 

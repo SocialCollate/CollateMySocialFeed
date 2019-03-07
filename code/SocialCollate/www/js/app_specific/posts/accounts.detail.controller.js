@@ -15,7 +15,7 @@
         accountsSrvc
     ) {
         var vm = angular.extend(this, {
-            
+            accounts:[]
         });
 
         vm.hideData = true;
@@ -29,10 +29,14 @@
             console.log("GETTING "+ "img/"+platform_name+".png");
             return "img/"+platform_name+".png";
         }
+        vm.goBack = function(){
+            $state.go("accounts_list", {accounts:$state.params.accounts});
+        }
 
         //get account from params
-        vm.ACCOUNT = $state.params.account;
-        vm.ACCOUNT_KEYS = Object.keys(vm.ACCOUNT);
+        vm.account = $state.params.accounts[$state.params.selected];
+
+        vm.account_keys = Object.keys(vm.account);
 
 
     }

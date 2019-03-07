@@ -301,13 +301,13 @@ function dummy() {
 
 
 const TWITTER_SERVICE = {
-    dummy: false,
+    dummy: true,
     scheme: "user_id,oauth_token,oauth_token_secret",
     getPosts: function (account, num_posts, callback) {
 
         //DEBUG - supply dummy tweets
         if (this.dummy) {
-            callback(dummyData);
+            callback(dummy());
             return;
         }
 
@@ -351,6 +351,13 @@ const TWITTER_SERVICE = {
     },
     getDetail: function (account, callback) {
 
+        if (this.dummy){
+            callback({
+                name: "Anonymous Bloke",
+                identifier: "@" + "some_dude",
+            });
+            return;
+        }
 
 
         console.log("getDetail called for ", account);

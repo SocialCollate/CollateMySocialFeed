@@ -9,7 +9,7 @@
 				.state('posts_list', {
 					cache: false,
 					url: '/posts_list',
-					params : {'posts':[]},
+					params : {posts:[]},
 					templateUrl: 'js/app_specific/posts/posts.list.html',
                     controller: 'postsListCtrl as vm'
                 })
@@ -23,7 +23,7 @@
 					cache: false,
 					url: '/posts_detail',
                     templateUrl: 'js/app_specific/posts/posts.detail.html',
-                    params: {'selected': 0 },
+                    params: {selected: 0 },
                     controller: 'eventsDetailCtrl as vm'
 				})
 				.state('posts_filter', {
@@ -35,7 +35,8 @@
 				.state('accounts_list', {
 					cache: false,
 					url: '/accounts_list',
-                    templateUrl: 'js/app_specific/posts/accounts.list.html',
+					templateUrl: 'js/app_specific/posts/accounts.list.html',
+					params: {accounts: []},
                     controller: 'accountsListCtrl as vm'
 				})
 				.state('accounts_add', {
@@ -48,7 +49,7 @@
 					cache: false,
 					url: '/account_detail',
                     templateUrl: 'js/app_specific/posts/accounts.detail.html',
-                    params: {'account': {} },
+					params: {accounts: [], selected : 0 },
                     controller: 'accountDetailCtrl as vm'
 				})
             });

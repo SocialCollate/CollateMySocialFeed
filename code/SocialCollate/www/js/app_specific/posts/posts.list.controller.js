@@ -9,19 +9,39 @@
         '$state',
         'accountsSrvc',
         'postsSrvc',
+        '$q',
+        '$timeout'
     ];
 
     function control(
         $state,
         accountsSrvc,
         postsSrvc,
+        $q,
+        $timeout
     ) {
         var vm = angular.extend(this, {
             posts: []
         });
 
         vm.accountList = function(){
-            $state.go('accounts_list');
+            if (accountsSrvc.performWait()){
+                let deferred = $q.defer();
+                let wait_time = 1000;
+                accountsSrvc.getAccounts();
+                //wait to allow account service to get details
+                $timeout(
+                    function () {
+                        $state.go('accounts_list');
+                        deferred.resolve();
+                    },
+                    wait_time);
+    
+    
+                return deferred.promise;
+            } else {
+                $state.go('accounts_list');
+            }
         }
         vm.update = function () {
             $state.go('posts_update');

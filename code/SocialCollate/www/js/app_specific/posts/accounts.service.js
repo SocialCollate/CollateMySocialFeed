@@ -27,10 +27,15 @@
 
         service.service_mapping = {};
 
+        let is_read = false;
+
         //add plugins for providers
         service.service_mapping["facebook"] = FACEBOOK_SERVICE;
         service.service_mapping["twitter"] = TWITTER_SERVICE;
 
+        for(let s=0;s<Object.keys(service.service_mapping).length;s++){
+            service.service_mapping[Object.keys(service.service_mapping)[s]].dummy = DUMMY_GLOBAL;
+        }
 
 
 
@@ -49,6 +54,7 @@
             return account;
         }
         service.getAccounts = function () {
+            is_read = true;
             console.log("getting accounts");
             service.ACCOUNTS = [];
             //read acounts from local storage.
@@ -96,7 +102,9 @@
             return result;
         }
         
-
+        service.performWait = function(){
+            return !is_read;
+        }
 
         service.storeAccount = function (account) {
             //store new/update old account in local storage.

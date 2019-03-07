@@ -1,6 +1,7 @@
 <ion-view style="background-color: #272733;" can-swipe-back="false">
 
-    <ion-header-bar class="bar-dark" align-title="center">
+    <ion-header-bar class="bar bar-dark bar-header" align-title="center">
+        <button ng-click="vm.goBack()" class="button button-icon icon ion-chevron-left"></button>
         <h1 class="title">Account Details</h1>
     </ion-header-bar>
 
@@ -15,19 +16,19 @@
 
             <div class="item">
                 <h2 style="float:left">Provider</h2>
-                <img style="float:right;margin:-5px -5px -5px 10px;"src={{vm.getLogo(vm.ACCOUNT.platform_name)}} width="30"height="30"/>
-                <h2 style="float:right">{{vm.capitalise(vm.ACCOUNT.platform_name)}}</h2>
+                <img style="float:right;margin:-5px -5px -5px 10px;"src={{vm.getLogo(vm.account.platform_name)}} width="30"height="30"/>
+                <h2 style="float:right">{{vm.capitalise(vm.account.platform_name)}}</h2>
 
             </div>
 
             <div class="item">
                 <h2 style="float:left">Name</h2>
-                <h2 style="float:right">{{vm.ACCOUNT.name}}</h2>
+                <h2 style="float:right">{{vm.account.name}}</h2>
             </div>
 
             <div class="item">
                 <h2 style="float:left">Identifier</h2>
-                <h2 style="float:right">{{vm.ACCOUNT.identifier}}</h2>
+                <h2 style="float:right">{{vm.account.identifier}}</h2>
             </div>
 
             <div style="background-color: #c5c5c5"class="item item-divider item-stable">
@@ -38,9 +39,9 @@
                 <button ng-click="vm.showAllData()">Show Data</button>
             </div>
 
-            <div ng-hide="!vm.hideData" ng-repeat="key in vm.ACCOUNT_KEYS"class="item">
+            <div ng-hide="!vm.hideData" ng-repeat="key in vm.account_keys"class="item">
                 <h2>{{key}}</h2>
-                <h3>{{vm.ACCOUNT[key]}}</h2>
+                <h3>{{vm.account[key]}}</h2>
             </div>
 
 

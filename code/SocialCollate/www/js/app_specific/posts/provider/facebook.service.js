@@ -14,6 +14,7 @@ var createPost = function (id, from, when, caption, description, image, message)
 }
 
 const FACEBOOK_SERVICE = {
+    
     scheme: "access_token,expires_in,time_created",
     getPosts: function (account, num_posts, callback) {
         let posts = [];

@@ -75,13 +75,16 @@
         var getAllPosts = function () {
             var deferred = $q.defer();
 
+            let result = [];
+            service.get_all_posts(null, function (posts) {
+                console.log("POSTS RECIEVED: ", posts);
+                result = posts;
+                postsArray = posts;
+            });
+
             $timeout(
                 function () {
-                    service.get_all_posts(null, function (posts) {
-                        console.log("POSTS RECIEVED: ", posts);
-                        postsArray = posts;
-                        deferred.resolve(posts);
-                    });
+                    deferred.resolve(result);
                 },
                 wait_time);
 

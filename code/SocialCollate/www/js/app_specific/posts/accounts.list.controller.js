@@ -44,7 +44,7 @@
         }
 
         vm.showDetail = function (account_index){
-            $state.go('account_detail', {accounts:vm.accounts,selected:account_index});
+            $state.go('account_detail', {accounts:angular.copy(vm.accounts),selected:account_index});
         }
 
         vm.deleteAllAccounts = function(){

@@ -26,11 +26,21 @@
             vm.hideData = false;
         }
         vm.getLogo = function (platform_name){
-            console.log("GETTING "+ "img/"+platform_name+".png");
             return "img/"+platform_name+".png";
         }
         vm.goBack = function(){
             $state.go("accounts_list", {accounts:$state.params.accounts});
+        }
+        vm.deleteAccount = function(){
+            if (confirm("Are you sure you want to delete this account?")){
+                console.log("delete request: ", vm.account);
+                if (accountsSrvc.deleteAccount(vm.account)){
+                    $state.go("accounts_list");
+                }
+                else {
+                    alert("Error encountered while deleting the account.");
+                }
+            }
         }
 
         //get account from params

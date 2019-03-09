@@ -19,12 +19,12 @@
 					templateUrl: 'js/app_specific/posts/posts.update.html',
                     controller: 'postsUpdateCtrl as vm'
                 })
-                .state('posts_detail', {
+                .state('post_detail', {
 					cache: false,
-					url: '/posts_detail',
+					url: '/post_detail',
                     templateUrl: 'js/app_specific/posts/posts.detail.html',
-                    params: {selected: 0 },
-                    controller: 'eventsDetailCtrl as vm'
+                    params: {post:{}},
+                    controller: 'postsDetailCtrl as vm'
 				})
 				.state('posts_filter', {
 					cache: false,

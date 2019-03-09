@@ -49,6 +49,9 @@
         vm.getLogo = function (platform_name){
             return "img/"+platform_name+".png";
         }
+        vm.showDetail = function (post){
+            $state.go("post_detail", {post});
+        }
 
         vm.posts = postsSrvc.getPosts();
         console.log("TEST: ",vm.posts, postsSrvc.getPosts());

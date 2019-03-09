@@ -214,7 +214,7 @@ function dummy() {
             platform_name: "twitter",
             id: "23489237595",
             from: "@" + "theresamay",
-            when: new Date("Wed Mar 06 2017 21:53:32 GMT+0000"),
+            when: new Date("Wed May 12 2017 21:53:32 GMT+0000"),
             text: "I'm not PM yet...",
             image: { src: null },
             stats: {
@@ -224,10 +224,10 @@ function dummy() {
         },
         {
             platform_name: "twitter",
-            id: "23489237590",
-            from: "@" + "borisjohnson",
-            when: new Date("Wed Mar 06 2019 21:53:32 GMT+0000"),
-            text: "I invented a bicycle.",
+            id: "23489237592",
+            from: "@" + "cicero",
+            when: new Date("Wed Mar 06 2012 21:53:32 GMT+0000"),
+            text: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam semper vulputate felis semper fermentum. Nulla tristique nibh at leo posuere.",
             image: { src: null },
             stats: {
                 favorites: 1,
@@ -236,65 +236,16 @@ function dummy() {
         },
         {
             platform_name: "twitter",
-            id: "23489237595",
-            from: "@" + "theresamay",
-            when: new Date("Wed Mar 06 2017 21:53:32 GMT+0000"),
-            text: "I'm not PM yet...",
+            id: "23489237594",
+            from: "@" + "teddy_roosevelt",
+            when: new Date("Wed Mar 06 2010 21:53:32 GMT+0000"),
+            text: "I’m a success today because I had a friend who believed in me and I didn’t have the heart to let him down.",
             image: { src: null },
             stats: {
                 favorites: 0,
                 retweets: 2,
             },
         },
-        {
-            platform_name: "twitter",
-            id: "23489237590",
-            from: "@" + "borisjohnson",
-            when: new Date("Wed Mar 06 2019 21:53:32 GMT+0000"),
-            text: "I invented a bicycle.",
-            image: { src: null },
-            stats: {
-                favorites: 1,
-                retweets: 5,
-            }
-        },
-        {
-            platform_name: "twitter",
-            id: "23489237595",
-            from: "@" + "theresamay",
-            when: new Date("Wed Mar 06 2017 21:53:32 GMT+0000"),
-            text: "I'm not PM yet...",
-            image: { src: null },
-            stats: {
-                favorites: 0,
-                retweets: 2,
-            },
-        },
-        {
-            platform_name: "twitter",
-            id: "23489237590",
-            from: "@" + "borisjohnson",
-            when: new Date("Wed Mar 06 2019 21:53:32 GMT+0000"),
-            text: "I invented a bicycle.",
-            image: { src: null },
-            stats: {
-                favorites: 1,
-                retweets: 5,
-            }
-        },
-        {
-            platform_name: "twitter",
-            id: "23489237595",
-            from: "@" + "theresamay",
-            when: new Date("Wed Mar 06 2017 21:53:32 GMT+0000"),
-            text: "I'm not PM yet...",
-            image: { src: null },
-            stats: {
-                favorites: 0,
-                retweets: 2,
-            },
-        },
-
     ];
 }
 

@@ -55,6 +55,11 @@
             $state.go("posts_list");
         }
 
+        vm.hasDetail = function (account){
+            let name = account.name;
+            return (!(name === null || name === undefined));
+        }
+
         if ($state.params.accounts.length > 0){
             vm.accounts = angular.copy($state.params.accounts);
             console.log("copied accounts from params.");

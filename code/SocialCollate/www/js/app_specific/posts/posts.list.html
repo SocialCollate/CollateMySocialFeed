@@ -1,9 +1,9 @@
 <ion-view style="background-color: #272733;" can-swipe-back="false" cache-view="false">
 
-    <ion-header-bar class="bar-dark" align-title="left">
-        <h1 class="title" style="float:left">Social Collate</h1>
-        <button class="button button-positive col" style="float:right; width:150px; position:absolute;"
-            ng-click="vm.accountList()">Manage Accounts</button>
+    <ion-header-bar class="bar-dark" align-title="center">
+        <button ng-click="vm.filterResults()"class="button button-icon icon ion-android-search"></button>
+        <h1 class="title">Social Collate</h1>
+        <button ng-click="vm.accountList()" class="button button-icon icon ion-navicon-round"></button>
     </ion-header-bar>
 
     <div class="fb-login-button" data-width="150" data-size="large" data-button-type="continue_with"
@@ -15,7 +15,7 @@
         <div>
 
             <ion-list>
-                <ion-item ng-repeat="post in vm.posts">
+                <ion-item ng-click="vm.showDetail(post)" ng-repeat="post in vm.posts">
                     <img width="50"height="50"style="float:left;margin-right:" src={{vm.getLogo(post.platform_name)}} alt="failed getting logo"/>
                     <div style="position:relative;left:15px;margin-top:5px;">
                         <h2>{{post.from}}</h2>

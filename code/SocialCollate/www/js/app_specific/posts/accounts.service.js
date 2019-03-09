@@ -87,7 +87,7 @@
             }
             //now ACCOUNTS is updated.
             console.log("RETURNED" + service.ACCOUNTS.length);
-            return angular.copy(service.ACCOUNTS);
+            return service.ACCOUNTS;
         }
 
         service.getEnabledAccounts = function () {

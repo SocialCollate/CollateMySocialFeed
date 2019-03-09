@@ -26,10 +26,11 @@
             vm.hideData = false;
         }
         vm.getLogo = function (platform_name){
+            console.log("GETTING "+ "img/"+platform_name+".png");
             return "img/"+platform_name+".png";
         }
         vm.goBack = function(){
-            $state.go("accounts_list", {accounts:angular.copy($state.params.accounts)});
+            $state.go("accounts_list", {accounts:$state.params.accounts});
         }
 
         //get account from params

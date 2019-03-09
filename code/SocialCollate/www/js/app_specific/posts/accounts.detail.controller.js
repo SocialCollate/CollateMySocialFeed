@@ -32,7 +32,7 @@
             $state.go("accounts_list", {accounts:$state.params.accounts});
         }
         vm.deleteAccount = function(){
-            if (confirm("Are you sure you want to delete this account?")){
+            if (confirm("Are you sure you want to delete this account?\nYou will have to log in if you want to use this account again.")){
                 console.log("delete request: ", vm.account);
                 if (accountsSrvc.deleteAccount(vm.account)){
                     $state.go("accounts_list");

@@ -34,6 +34,7 @@
             let accounts = accountsSrvc.getEnabledAccounts();
             let service_mapping = accountsSrvc.service_mapping;
             console.log(accounts.length + " accounts detected. ");
+            console.log(num_posts);
             //for each account
             for (let a = 0; a < accounts.length; a++) {
                 //get posts from that account

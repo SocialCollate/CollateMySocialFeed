@@ -1,24 +1,25 @@
-function dummy(){
-    return [{
-        platform_name:"facebook",
-        id:2397823498,
-        from:"Bob Bobson",
-        when:new Date(),
-        text:"SAMPLE TEXT",
-        image: {src:null},
-        stats:{
-            shares:140
-        }
-    }];
-}
+
 
 const FACEBOOK_SERVICE = {
     dummy: false,
     scheme: "access_token,expires_in,time_created",
+    getDummy:function(){
+        return [{
+            platform_name:"facebook",
+            id:2397823498,
+            from:"Bob Bobson",
+            when:new Date(),
+            text:"SAMPLE TEXT",
+            image: {src:null},
+            stats:{
+                shares:140
+            }
+        }];
+    },
     getPosts: function (account, num_posts, callback) {
         console.log("getPosts called for FACEBOOK");
         if (this.dummy){
-            callback(dummy());
+            callback(this.getDummy());
             return;
         }
 
@@ -52,6 +53,14 @@ const FACEBOOK_SERVICE = {
         });
     },
     getDetail: function (account, callback) {
+        if (this.dummy){
+            callback({
+                name:"Anon",
+                identifier: "Anonymous Dude"
+            });
+            return;
+        }
+
         FB.api('/me', { access_token: account.access_token, fields: 'first_name, name' }, function (response) {
             if (response) {
                 callback({

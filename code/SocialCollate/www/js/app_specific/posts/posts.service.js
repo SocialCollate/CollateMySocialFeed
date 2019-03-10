@@ -49,7 +49,9 @@
                 console.log("PLATFORM SERVICE: ", platform_service);
 
                 await platform_service.getPosts(account, num_post_per_account, function (posts) {
+                    console.log("POSTS iterating: ", posts);
                     for (let p = 0; p < posts.length; p++) {
+                        console.log("adding post: ",posts[p]);
                         postsArray.push(posts[p]);
                     }
                 });

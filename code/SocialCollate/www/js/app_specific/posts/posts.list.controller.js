@@ -84,6 +84,7 @@
             }
             else {
                 if (Math.floor(diff / (60)) == 1) return "1 minute ago";
+                else if(Math.floor(diff / (60)) == 0) return "Just now";
                 else return Math.floor(diff / (60)) + " minutes ago";
             }
         }

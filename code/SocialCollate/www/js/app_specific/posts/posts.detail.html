@@ -6,11 +6,11 @@
     </ion-header-bar>
 
     <ion-content class="has-header">
-        <div style="margin:0 10px 0 10px;">
+        <div style="margin:0 20px 0 20px;">
             <img width="50" height="50" style="float:left;" src={{vm.getLogo(vm.post.platform_name)}}
                 alt="failed getting logo" />
             <h2 style="line-height: 50px;position:relative;left:20px;"class="dark">{{vm.post.from}}</h2>
-            <h3 class="dark">{{vm.formatDate(vm.post.when)}}</h3>
+            <p style="font-size:18px;color:#707070">{{vm.formatDate(vm.post.when)}}</p>
             <h4 class="dark">{{vm.post.text}}</h3>
         </div>
 

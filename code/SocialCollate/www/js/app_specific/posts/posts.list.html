@@ -21,7 +21,9 @@
                         <h2>{{post.from}}</h2>
                         <p>{{post.text}}</p>
                     </div>
-                    
+                    <div style="position:absolute;right:5px;top:5px;text-align:right;">
+                       <h4>{{vm.formatDate(post.when)}}</h4>
+                    </div>
                 </ion-item>
             </ion-list>
         </div>

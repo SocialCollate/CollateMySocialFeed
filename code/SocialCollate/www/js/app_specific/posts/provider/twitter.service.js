@@ -255,10 +255,12 @@ const TWITTER_SERVICE = {
     dummy: true,
     scheme: "user_id,oauth_token,oauth_token_secret",
     getPosts: function (account, num_posts, callback) {
+        console.log("getPosts called for TWITTER");
 
         //DEBUG - supply dummy tweets
         if (this.dummy) {
-            callback(dummy());
+            let returndata = dummy();
+            callback(returndata);
             return;
         }
 

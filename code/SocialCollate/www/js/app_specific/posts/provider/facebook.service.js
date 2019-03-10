@@ -1,22 +1,27 @@
-var createPost = function (id, from, when, caption, description, image, message) {
-    //see
-    //https://developers.facebook.com/docs/graph-api/reference/v3.2/post
-    //for Post attributes for FB.
-    return {
-        id,
-        from,
-        when,
-        caption,
-        description,
-        image,
-        message
-    }
+function dummy(){
+    return [{
+        platform_name:"facebook",
+        id:2397823498,
+        from:"Bob Bobson",
+        when:new Date(),
+        text:"SAMPLE TEXT",
+        image: {src:null},
+        stats:{
+            shares:140
+        }
+    }];
 }
 
 const FACEBOOK_SERVICE = {
-    
+    dummy: false,
     scheme: "access_token,expires_in,time_created",
     getPosts: function (account, num_posts, callback) {
+        console.log("getPosts called for FACEBOOK");
+        if (this.dummy){
+            callback(dummy());
+            return;
+        }
+
         let posts = [];
         FB.api('/me/feed',
         {access_token:account.access_token},

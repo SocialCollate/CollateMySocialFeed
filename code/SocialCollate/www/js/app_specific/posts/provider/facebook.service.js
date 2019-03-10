@@ -1,35 +1,42 @@
-var createPost = function (id, from, when, caption, description, image, message) {
-    //see
-    //https://developers.facebook.com/docs/graph-api/reference/v3.2/post
-    //for Post attributes for FB.
-    return {
-        id,
-        from,
-        when,
-        caption,
-        description,
-        image,
-        message
-    }
-}
+
 
 const FACEBOOK_SERVICE = {
-    
+    dummy: false,
     scheme: "access_token,expires_in,time_created",
+    getDummy:function(){
+        return [{
+            platform_name:"facebook",
+            id:2397823498,
+            from:"Bob Bobson",
+            when:new Date(),
+            text:"SAMPLE TEXT",
+            image: {src:null},
+            stats:{
+                shares:140
+            }
+        }];
+    },
     getPosts: function (account, num_posts, callback) {
+        console.log("getPosts called for FACEBOOK");
+        if (this.dummy){
+            callback(this.getDummy());
+            return;
+        }
+
         let posts = [];
         FB.api('/me/feed',
         {access_token:account.access_token},
         function (response){
             console.log("FB getPosts response: ",response);
-            for (let p=0;p<response.length;p++){
-                let post = response[p];
+
+            for (let p=0;p<response.data.length;p++){
+                let post = response.data[p];
 
                 posts.push({
                     platform_name: "facebook",
                     id: post.id,
-                    from: post.from.name,
-                    when: post.created_time,
+                    from: post.from ? post.from.name : account.name,
+                    when: new Date(post.created_time),
                     text: post.message,
                     image: {src:post.picture},
                     stats: {
@@ -39,11 +46,21 @@ const FACEBOOK_SERVICE = {
 
             }
 
-            posts = posts.splice(num_posts);
+            //splice does NOT return shallow copy, it returns removed elements...
+            posts.splice(num_posts);
+            console.log("posts before return: ",posts)
             callback(posts);
         });
     },
     getDetail: function (account, callback) {
+        if (this.dummy){
+            callback({
+                name:"Anon",
+                identifier: "Anonymous Dude"
+            });
+            return;
+        }
+
         FB.api('/me', { access_token: account.access_token, fields: 'first_name, name' }, function (response) {
             if (response) {
                 callback({

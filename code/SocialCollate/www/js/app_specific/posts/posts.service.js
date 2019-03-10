@@ -30,21 +30,28 @@
             console.log("USER SETTINGS: ", USER_SETTINGS);
             if (!options) options = USER_SETTINGS;
 
-            let num_posts = options.max_posts_per_account;
+            let num_post_per_account = options.max_posts_per_account;
+            let num_posts = options.max_posts_total;
             let accounts = accountsSrvc.getEnabledAccounts();
             let service_mapping = accountsSrvc.service_mapping;
+            let account;
+            let platform_name;
+            let platform_service;
             console.log(accounts.length + " accounts detected. ");
+            console.log(num_posts);
             //for each account
             for (let a = 0; a < accounts.length; a++) {
                 //get posts from that account
-                let account = accounts[a];
-                let platform_name = account.platform_name;
-                let platform_service = service_mapping[platform_name];
+                account = accounts[a];
+                platform_name = account.platform_name;
+                platform_service = service_mapping[platform_name];
 
                 console.log("PLATFORM SERVICE: ", platform_service);
 
-                await platform_service.getPosts(account, num_posts, function (posts) {
+                await platform_service.getPosts(account, num_post_per_account, function (posts) {
+                    console.log("POSTS iterating: ", posts);
                     for (let p = 0; p < posts.length; p++) {
+                        console.log("adding post: ",posts[p]);
                         postsArray.push(posts[p]);
                     }
                 });
@@ -52,7 +59,7 @@
             }
 
             //sort posts by date 
-            postsArray = postsArray.sort(function (x, y) { return (x.when.getTime() - y.when.getTime()) });
+            postsArray.sort(function (x, y) { return (y.when.getTime() - x.when.getTime()) });
 
             //cut old posts, leaving {num_posts} remaining posts
             postsArray.splice(num_posts - 1);

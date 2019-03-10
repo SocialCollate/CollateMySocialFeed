@@ -196,118 +196,72 @@ function generateAuthHeader(method, account, url, params) {
     return authHeader;
 }
 
-function dummy() {
-    return [
-        {
-            platform_name: "twitter",
-            id: "23489237590",
-            from: "@" + "borisjohnson",
-            when: new Date("Wed Mar 06 2019 21:53:32 GMT+0000"),
-            text: "I invented a bicycle.",
-            image: { src: null },
-            stats: {
-                favorites: 1,
-                retweets: 5,
-            }
-        },
-        {
-            platform_name: "twitter",
-            id: "23489237595",
-            from: "@" + "theresamay",
-            when: new Date("Wed Mar 06 2017 21:53:32 GMT+0000"),
-            text: "I'm not PM yet...",
-            image: { src: null },
-            stats: {
-                favorites: 0,
-                retweets: 2,
-            },
-        },
-        {
-            platform_name: "twitter",
-            id: "23489237590",
-            from: "@" + "borisjohnson",
-            when: new Date("Wed Mar 06 2019 21:53:32 GMT+0000"),
-            text: "I invented a bicycle.",
-            image: { src: null },
-            stats: {
-                favorites: 1,
-                retweets: 5,
-            }
-        },
-        {
-            platform_name: "twitter",
-            id: "23489237595",
-            from: "@" + "theresamay",
-            when: new Date("Wed Mar 06 2017 21:53:32 GMT+0000"),
-            text: "I'm not PM yet...",
-            image: { src: null },
-            stats: {
-                favorites: 0,
-                retweets: 2,
-            },
-        },
-        {
-            platform_name: "twitter",
-            id: "23489237590",
-            from: "@" + "borisjohnson",
-            when: new Date("Wed Mar 06 2019 21:53:32 GMT+0000"),
-            text: "I invented a bicycle.",
-            image: { src: null },
-            stats: {
-                favorites: 1,
-                retweets: 5,
-            }
-        },
-        {
-            platform_name: "twitter",
-            id: "23489237595",
-            from: "@" + "theresamay",
-            when: new Date("Wed Mar 06 2017 21:53:32 GMT+0000"),
-            text: "I'm not PM yet...",
-            image: { src: null },
-            stats: {
-                favorites: 0,
-                retweets: 2,
-            },
-        },
-        {
-            platform_name: "twitter",
-            id: "23489237590",
-            from: "@" + "borisjohnson",
-            when: new Date("Wed Mar 06 2019 21:53:32 GMT+0000"),
-            text: "I invented a bicycle.",
-            image: { src: null },
-            stats: {
-                favorites: 1,
-                retweets: 5,
-            }
-        },
-        {
-            platform_name: "twitter",
-            id: "23489237595",
-            from: "@" + "theresamay",
-            when: new Date("Wed Mar 06 2017 21:53:32 GMT+0000"),
-            text: "I'm not PM yet...",
-            image: { src: null },
-            stats: {
-                favorites: 0,
-                retweets: 2,
-            },
-        },
 
-    ];
-}
 
 
 
 const TWITTER_SERVICE = {
     dummy: true,
+    getDummy: function () {
+        return [
+            {
+                platform_name: "twitter",
+                id: "23489237590",
+                from: "@" + "borisjohnson",
+                when: new Date("Wed Mar 06 2019 21:53:32 GMT+0000"),
+                text: "I invented a bicycle.",
+                image: { src: null },
+                stats: {
+                    favorites: 1,
+                    retweets: 5,
+                }
+            },
+            {
+                platform_name: "twitter",
+                id: "23489237595",
+                from: "@" + "theresamay",
+                when: new Date("Wed May 12 2017 21:53:32 GMT+0000"),
+                text: "I'm not PM yet...",
+                image: { src: null },
+                stats: {
+                    favorites: 0,
+                    retweets: 2,
+                },
+            },
+            {
+                platform_name: "twitter",
+                id: "23489237592",
+                from: "@" + "cicero",
+                when: new Date("Wed Mar 06 2012 21:53:32 GMT+0000"),
+                text: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam semper vulputate felis semper fermentum. Nulla tristique nibh at leo posuere.",
+                image: { src: null },
+                stats: {
+                    favorites: 1,
+                    retweets: 5,
+                }
+            },
+            {
+                platform_name: "twitter",
+                id: "23489237594",
+                from: "@" + "teddy_roosevelt",
+                when: new Date("Wed Mar 06 2010 21:53:32 GMT+0000"),
+                text: "I’m a success today because I had a friend who believed in me and I didn’t have the heart to let him down.",
+                image: { src: null },
+                stats: {
+                    favorites: 0,
+                    retweets: 2,
+                },
+            },
+        ];
+    },
     scheme: "user_id,oauth_token,oauth_token_secret",
     getPosts: function (account, num_posts, callback) {
+        console.log("getPosts called for TWITTER");
 
         //DEBUG - supply dummy tweets
         if (this.dummy) {
-            callback(dummy());
+            let returndata = this.getDummy();
+            callback(returndata);
             return;
         }
 
@@ -351,7 +305,7 @@ const TWITTER_SERVICE = {
     },
     getDetail: function (account, callback) {
 
-        if (this.dummy){
+        if (this.dummy) {
             callback({
                 name: "Anonymous Bloke",
                 identifier: "@" + "some_dude",

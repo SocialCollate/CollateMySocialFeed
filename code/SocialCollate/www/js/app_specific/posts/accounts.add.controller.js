@@ -22,6 +22,26 @@
             ACCOUNTS: []
         });
 
+        vm.goBack = function(){
+            if (accountsSrvc.performWait()){
+                let deferred = $q.defer();
+                let wait_time = 1000;
+                accountsSrvc.getAccounts();
+                //wait to allow account service to get details
+                $timeout(
+                    function () {
+                        $state.go('accounts_list');
+                        deferred.resolve();
+                    },
+                    wait_time);
+    
+    
+                return deferred.promise;
+            } else {
+                $state.go('accounts_list');
+            }
+        }
+
 
 
         vm.oauth_login = function (platform_name) {
@@ -69,6 +89,8 @@
                 });
                 
             }
+
+            
         }
     }
 }) ();

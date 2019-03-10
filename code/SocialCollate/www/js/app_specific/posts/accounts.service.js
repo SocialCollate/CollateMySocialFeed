@@ -165,12 +165,22 @@
 
             var index = checkIndex(account);
 
-            //index of account comes from the checkIndex function
-            //array slice saves a shallow copy of array list need to look more into this
-            service.ACCOUNTS = service.ACCOUNTS.slice(index, 1);
+            console.log("attempting to delete ", index);
 
-            // use existing fuction to store new array list
-            storeLocalAccounts();
+            let returned = service.ACCOUNTS.splice(index, 1);
+
+            console.log("accounts after deletion :",service.ACCOUNTS, "returned: ",returned);
+
+            if (returned[0].account_num === account.account_num){
+                // use existing function to store new array list
+                storeLocalAccounts();
+                return true;
+            }
+            else {
+                return false;
+            }
+
+            
 
 
         }
@@ -184,11 +194,12 @@
 
         //function to check index of account object
         function checkIndex(account) {
-            var index;
-            index = service.ACCOUNTS.findIndex(account);
 
-            //returns the index 
-            return index;
+            for(let a=0;a<service.ACCOUNTS.length;a++){
+                if (account.account_num === service.ACCOUNTS[a].account_num) return a;
+            }
+
+            return false;
 
         }
 

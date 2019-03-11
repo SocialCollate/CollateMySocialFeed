@@ -3,7 +3,7 @@
 
     angular
         .module('postsjs')
-        .controller('eventsDetailCtrl', control);
+        .controller('postsFilterCtrl', control);
 
     control.$inject = [
         '$state',
@@ -19,9 +19,13 @@
         accountsSrvc
     ) {
        
+        var vm = angular.extend(this, {
+            
+        });
+
 
         vm.search = function(){
-            $state.go('posts_list');
+            $state.go('posts_list', {search:getSearch()});
         }
 
 

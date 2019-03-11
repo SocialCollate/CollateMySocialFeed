@@ -29,7 +29,7 @@
 				.state('posts_filter', {
 					cache: false,
 					url: '/posts_filter',
-                    templateUrl: 'js/app_specific/posts/posts.detail.html',
+                    templateUrl: 'js/app_specific/posts/posts.filter.html',
                     controller: 'postsFilterCtrl as vm'
 				})
 				.state('accounts_list', {

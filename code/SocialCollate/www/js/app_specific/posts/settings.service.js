@@ -1,3 +1,4 @@
+
 (function () {
     'use strict';
 
@@ -105,6 +106,7 @@
             user_settings = {};
 
             let settingsStr = window.localStorage.getItem("user_settings");
+            console.log("settings: ", settingsStr);
             if ((settingsStr === null) || (settingsStr === undefined) || (settingsStr === "")) {
                 //get default settings
                 service.saveSettings(USER_SETTINGS_DEFAULT);
@@ -120,7 +122,8 @@
                     let value = setting[1];
 
                     //transform strings
-                    if (typeof parseInt(value) === 'number') value = parseInt(value);
+                    if (!isNaN(parseInt(value))) value = parseInt(value);
+
                     else if (value === "true") value = true;
                     else if (value === "false") value = false;
 

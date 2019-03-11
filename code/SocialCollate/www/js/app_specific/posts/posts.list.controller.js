@@ -57,6 +57,9 @@
         vm.settings = function (){
             $state.go("user_settings");
         }
+        vm.filterResults = function (){
+            $state.go("posts_filter");
+        }
         vm.formatDate = function (date) {
             let today = new Date();
 

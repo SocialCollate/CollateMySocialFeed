@@ -33,10 +33,18 @@
         service.service_mapping["facebook"] = FACEBOOK_SERVICE;
         service.service_mapping["twitter"] = TWITTER_SERVICE;
 
-        for(let s=0;s<Object.keys(service.service_mapping).length;s++){
-            service.service_mapping[Object.keys(service.service_mapping)[s]].dummy = DUMMY_GLOBAL;
+        let user_settings;
+
+        function updateDummy() {
+            user_settings = settingsSrvc.getUserSettings();
+            for(let s=0;s<Object.keys(service.service_mapping).length;s++){
+                service.service_mapping[Object.keys(service.service_mapping)[s]].dummy = user_settings.dummy_global;
+            }
         }
 
+        updateDummy();
+
+        
 
 
         service.noAccounts = function () {
@@ -54,6 +62,7 @@
             return account;
         }
         service.getAccounts = function () {
+            updateDummy();
             is_read = true;
             console.log("getting accounts");
             service.ACCOUNTS = [];

@@ -1,0 +1,19 @@
+<ion-view style="background-color: #f3f3f3;" can-swipe-back="false">
+
+    <ion-header-bar class="bar-dark" align-title="center">
+        <button ng-click="vm.goBack()" class="button button-icon icon ion-arrow-left-c"></button>
+        <h1 class="title">Change Setting</h1>
+    </ion-header-bar>
+
+    <ion-content style="text-align: center;overflow: hidden;" class="has-header">
+        <h2 style="margin-top: 10px;" class="title">{{vm.getSettingTitle()}}</h2>
+        <div class="range">
+            <input type="range" min="{{vm.getMin()}}" max="{{vm.getMax()}}"
+                value="{{vm.getValueDefault()}}" step="{{vm.getStep()}}"id="range_input">
+        </div>
+        <h1 id="readout"></h1>
+        <button style="font-size:large;opacity:0;transition: opacity .25s" id="confirm_btn" ng-click="vm.confirm()" class="button button-positive">Confirm Change</button>
+    </ion-content>
+
+
+</ion-view>

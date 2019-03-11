@@ -8,15 +8,15 @@
     postsSrvc.$inject = [
         '$q', // promises service
         '$timeout', // timeout service
-        'moment', // does dates really well
-        'accountsSrvc' //accounts service.
+        'accountsSrvc', //accounts service.
+        'settingsSrvc'
     ];
 
     function postsSrvc(
         $q,
         $timeout,
-        moment,
-        accountsSrvc
+        accountsSrvc,
+        settingsSrvc
     ) {
 
         var service = {
@@ -24,11 +24,13 @@
         };
 
         let postsArray = [];
+        let user_settings = settingsSrvc.getUserSettings();
 
         service.get_all_posts = async function (options, callback) {
+            user_settings = settingsSrvc.getUserSettings();
             postsArray = [];
-            console.log("USER SETTINGS: ", USER_SETTINGS);
-            if (!options) options = USER_SETTINGS;
+            console.log("USER SETTINGS: ", user_settings);
+            if (!options) options = user_settings;
 
             let num_post_per_account = options.max_posts_per_account;
             let num_posts = options.max_posts_total;
@@ -58,11 +60,8 @@
 
             }
 
-            //sort posts by date 
-            postsArray.sort(function (x, y) { return (y.when.getTime() - x.when.getTime()) });
-
             //cut old posts, leaving {num_posts} remaining posts
-            postsArray.splice(num_posts - 1);
+            postsArray.splice(num_posts);
 
             console.log("posts.service.js: ",postsArray);
 

@@ -10,7 +10,8 @@
         'accountsSrvc',
         'postsSrvc',
         '$q',
-        '$timeout'
+        '$timeout',
+        'settingsSrvc'
     ];
 
     function control(
@@ -18,7 +19,8 @@
         accountsSrvc,
         postsSrvc,
         $q,
-        $timeout
+        $timeout,
+        settingsSrvc
     ) {
         var vm = angular.extend(this, {
             posts: []
@@ -51,6 +53,9 @@
         }
         vm.showDetail = function (post) {
             $state.go("post_detail", { post });
+        }
+        vm.settings = function (){
+            $state.go("user_settings");
         }
         vm.formatDate = function (date) {
             let today = new Date();
@@ -90,7 +95,15 @@
         }
 
         vm.posts = postsSrvc.getPosts();
-        console.log("TEST: ", vm.posts, postsSrvc.getPosts());
+
+        //sort posts by date 
+        vm.posts.sort(function (x, y) { return (y.when.getTime() - x.when.getTime()) });
+
+        let user_settings = settingsSrvc.getUserSettings();
+
+        //filter out to achieve total max
+        vm.posts.splice(user_settings.max_posts_total);
+
     }
 
 

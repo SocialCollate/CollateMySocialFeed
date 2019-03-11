@@ -1,0 +1,28 @@
+<ion-view style="background-color: #272733;" can-swipe-back="false">
+
+    <ion-header-bar class="bar-dark" align-title="center">
+        <button ng-click="vm.goBack()" class="button button-icon icon ion-arrow-left-c"></button>
+        <h1 class="title">Settings</h1>
+        <button ng-show="vm.needsSaving()" ng-click="vm.saveChanges()" class="button button-icon icon ion-android-archive"></button>
+    </ion-header-bar>
+
+    <ion-content class="has-header">
+        <ion-list>
+            <ion-item ng-click="vm.editValue(setting_key)" ng-repeat="setting_key in vm.setting_keys">
+                <h2>
+                    {{vm.keyTitle(setting_key)}}
+                </h2>
+                <p style="color:#707070;white-space:normal;">
+                    {{vm.keyDesc(setting_key)}}
+                </p>
+                <h2 style="float: right">
+                    {{vm.valueFormat(vm.settings[setting_key])}}
+                </h2>
+
+                
+            </ion-item>
+        </ion-list>
+
+    </ion-content>
+
+</ion-view>

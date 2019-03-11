@@ -52,6 +52,20 @@
 					params: {accounts: [], selected : 0 },
                     controller: 'accountDetailCtrl as vm'
 				})
+				.state('user_settings', {
+					cache: false,
+					url: '/user_settings',
+                    templateUrl: 'js/app_specific/posts/user.settings.html',
+					params: {changes:false,settings:{},set:{}},
+                    controller: 'userSettingsCtrl as vm'
+				})
+				.state('user_settings_change', {
+					cache: false,
+					url: '/user_settings_change',
+                    templateUrl: 'js/app_specific/posts/user.settings.change.html',
+					params: {changes:false,settings: {},setting:{},info:{}},
+                    controller: 'userSettingsChangeCtrl as vm'
+				})
             });
 				
 })();

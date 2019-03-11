@@ -95,7 +95,7 @@
             for (let s = 0; s < keys.length; s++) {
                 let key = keys[s];
                 let value = new_settings[key];
-                newUserSettingsStr += key + ":" + value + ";";
+                newUserSettingsStr += key + ":" + value.toString() + ";";
             }
 
             window.localStorage.setItem("user_settings", newUserSettingsStr);

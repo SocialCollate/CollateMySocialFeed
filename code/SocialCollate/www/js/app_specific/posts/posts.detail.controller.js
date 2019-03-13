@@ -48,9 +48,29 @@
             return date.getDate()+" "+months[date.getMonth()]+" "+date.getFullYear()+", "+dInt(date.getHours())+":"+dInt(date.getMinutes());
         }
 
+        vm.getIcon = function (stat){
+            // returns the correct icon for this stat.
+            switch (stat){
+                case "retweets":
+                    return "icon ion-loop";
+                case "favorites":
+                    return "icon ion-heart";
+                case "likes":
+                    return "icon ion-thumbsup";
+                case "shares":
+                    return "icon ion-share";
+                case "comments":
+                    return "ion-email";
+                default:
+                    return "icon ion-help-circled";
+            }
+        }
+
         var params = $stateParams;
 
         vm.post = params.post;
-
+        vm.stats = params.post.stats;
+        vm.stats_keys = Object.keys(params.post.stats);
+        console.log(vm.stats);
     }
 })();

@@ -25,12 +25,14 @@ const FACEBOOK_SERVICE = {
 
         let posts = [];
         FB.api('/me/feed',
-        {access_token:account.access_token},
+        {access_token:account.access_token,
+        fields:"from,created_time,picture,shares,message,likes.summary(true).limit(0),comments.summary(true).limit(0)"},
         function (response){
             console.log("FB getPosts response: ",response);
 
             for (let p=0;p<response.data.length;p++){
                 let post = response.data[p];
+                console.log("FB post: ", post);
 
                 posts.push({
                     platform_name: "facebook",
@@ -40,7 +42,9 @@ const FACEBOOK_SERVICE = {
                     text: post.message,
                     image: {src:post.picture},
                     stats: {
-                        shares:post.shares,
+                        shares:post.shares ? post.shares : 0,
+                        likes:post.likes.summary.total_count,
+                        comments:post.comments.summary.total_count
                     }
                 });
 

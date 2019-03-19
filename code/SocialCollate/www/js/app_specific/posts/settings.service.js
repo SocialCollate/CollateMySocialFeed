@@ -146,12 +146,26 @@
             return angular.copy(user_settings);
         }
 
+        service.saveShowFeeds = function(new_show_feeds){
+            //saves the new show feeds
+            let newShowFeedsStr = "";
+
+            for (let f = 0; f < new_show_feeds.length; f++) {
+                    newShowFeedsStr += new_show_feeds[f].toString() + ",";
+            }
+
+            window.localStorage.setItem("show_feeds", newShowFeedsStr);
+            console.log("SET SHOW_FEEDS:",newShowFeedsStr);
+        }
+
         service.getShowFeeds = function () {
+
             service.show_feeds = [];
 
             let show_feeds = window.localStorage.getItem("show_feeds");
-            if (show_feeds == null) { window.localStorage.setItem("show_feeds", ""); show_feeds = ""; }
+            if (show_feeds === null) { window.localStorage.setItem("show_feeds", ""); show_feeds = ""; }
 
+            console.log("SHOW_FEEDS", show_feeds);
             if (show_feeds.length != 0) {
                 let extractedArray = show_feeds.split(",");
                 for (let i = 0; i < extractedArray.length; i++) {
@@ -161,15 +175,12 @@
                     }
                 }
             }
+            console.log("show feeds before splice:",service.show_feeds);
             //now show_feeds is updated.
-            return service.show_feeds;
+            return angular.copy(service.show_feeds);
         }
 
         service.accountEnabled = function (account) {
-            //TODO ADD show_feeds to write storage.
-            //for now, just assume all feeds are enabled.
-            return true;
-
             //returns true if the account is enabled (if it is in the show_feeds store)
             service.getShowFeeds();
             for (let i = 0; i < service.show_feeds.length; i++) {

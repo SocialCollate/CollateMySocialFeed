@@ -26,6 +26,7 @@
             posts: []
         });
 
+
         vm.accountList = function () {
             if (accountsSrvc.performWait()) {
                 let deferred = $q.defer();

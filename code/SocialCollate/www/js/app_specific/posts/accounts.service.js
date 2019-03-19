@@ -110,6 +110,10 @@
             }
             return result;
         }
+
+        service.setEnabledAccounts = function(enabled_accounts){
+            settingsSrvc.saveShowFeeds(enabled_accounts);
+        }
         
         service.performWait = function(){
             return !is_read;

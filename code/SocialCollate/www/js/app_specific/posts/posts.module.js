@@ -9,7 +9,7 @@
 				.state('posts_list', {
 					cache: false,
 					url: '/posts_list',
-					params : {posts:[]},
+					params : {posts:[],search:null},
 					templateUrl: 'js/app_specific/posts/posts.list.html',
                     controller: 'postsListCtrl as vm'
                 })

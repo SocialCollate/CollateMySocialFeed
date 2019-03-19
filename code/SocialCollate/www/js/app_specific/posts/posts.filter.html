@@ -1,38 +1,41 @@
-<ion-view style="background-color: #272733;" can-swipe-back="false">
+<ion-view style="background-color: #f3f3f3;" can-swipe-back="false">
 
     <ion-header-bar class="bar-dark" align-title="center">
+        <button ng-click="vm.goBack()" class="button button-icon icon ion-arrow-left-c"></button>
         <h1 class="title">Filter Results</h1>
+        <button class="button button-icon icon ion-android-search placeholder-icon" ng-click="vm.search()"></button>
     </ion-header-bar>
-    
+
     <ion-content class="has-header">
 
 
         <!--Search-->
         <div class="bar bar-header item-input-inset">
             <label class="item-input-wrapper">
-              <input type="search" placeholder="Search">
+                <input id="searchtext" type="search" placeholder="Search">
             </label>
-            <button class="button button-clear icon ion-ios-search placeholder-icon" ng-click="vm.search()" >
-            
-            </button>
-          </div>
-        
 
+        </div>
 
+        <ion-subheader-bar class="bar-light bar bar-subheader" align-title="center">
+            <h2 class="title">Use Accounts</h1>
+        </ion-subheader-bar>
 
+        <ion-list style="position:relative; top:30px;">
+            <ion-toggle [checked]="vm.checked(account.account_num)" style="padding-top:30px;" slot="end" ng-click="vm.toggle(account.account_num)" ng-repeat="account in vm.accounts">
+                <img width="50" height="50" style="float:left;" src={{vm.getLogo(account.platform_name)}}
+                    alt="failed getting logo" />
+                <div ng-show="vm.hasDetail(account)">
+                    <h2 style="font-size:130%;float:right;">{{account.name}}</h2>
+                    <h3 style="float:right;clear:right;">{{account.identifier}}</h3>
+                </div>
 
+            </ion-checkbox>
+        </ion-list>
 
+        <button style="position:fixed; bottom:10px; left:50%; width:200px;margin-left:-100px;right:25%; font-size:large;opacity:0;transition: opacity .25s" id="confirm_btn" ng-click="vm.confirm()" class="button button-positive">Confirm Change</button>
 
     </ion-content>
 
-    <ion-footer-bar class="bar bar-dark bar-footer row" style="position:fixed; bottom:0px; padding: 0px;">
-        <i class="col-20"></i>
-
-        <button class="button button-positive col" style="margin: 5px; color: white;" ng-click="vm.update()" style="position: absolute; width: 50%; left: 50%; transform: translate(-50%,0%);">
-            Update
-        </button>
-
-        <i class="col-20"></i>
-    </ion-footer-bar>
 
 </ion-view>

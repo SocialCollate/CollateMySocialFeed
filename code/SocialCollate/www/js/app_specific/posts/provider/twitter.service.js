@@ -196,10 +196,6 @@ function generateAuthHeader(method, account, url, params) {
     return authHeader;
 }
 
-
-
-
-
 const TWITTER_SERVICE = {
     dummy: true,
     getDummy: function () {

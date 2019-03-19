@@ -181,6 +181,8 @@
         }
 
         service.accountEnabled = function (account) {
+            //assume all accounts are enabled. remove to perform show_feeds check.
+            return true;
             //returns true if the account is enabled (if it is in the show_feeds store)
             service.getShowFeeds();
             for (let i = 0; i < service.show_feeds.length; i++) {
